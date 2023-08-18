@@ -115,17 +115,19 @@ SkyLyrac            </a>
                 </div>
                 <p>A few months ago I created <a class="reference external" href="https://github.com/blocksds/sdk">BlocksDS</a>, a new SDK for Nintendo DS. It uses
 libnds, DS WiFI and Maxmod, so it is compatible with projects that use
-devkitARM. The toolchain it uses comes from <a class="reference external" href="https://wonderful.asie.pl/">Wonderful Toolchains</a> by <a class="reference external" href="https://asie.pl/">asie</a>.</p>
+devkitARM. The toolchain it uses comes from <a class="reference external" href="https://wonderful.asie.pl">Wonderful Toolchains</a> by <a class="reference external" href="https://asie.pl/">asie</a>.</p>
 <p>Its main objective is to remain as compatible as possible with old projects that
 use devkitARM, while adding new features that have been needed for a long time,
 but that would have never been added to the original repositories of devkitPro.</p>
 <p>In order to achieve this, the libraries have been forked, and there are some
 visible improvements over devkitARM already:</p>
 <ul>
-<li><p class="first">Binaries are smaller and they use less RAM. The main two reasons for that are:</p>
+<li><p class="first">Binaries are smaller and they use less RAM. The main reasons for that are:</p>
 <ul class="simple">
-<li>Instead of using newlib, BlocksDS uses picolibc (thanks to Wonderful
-Toolchains), which is smaller.</li>
+<li>Instead of using <a class="reference external" href="https://sourceware.org/newlib">newlib</a>, BlocksDS uses <a class="reference external" href="https://github.com/picolibc/picolibc">picolibc</a> (thanks to Wonderful
+Toolchains). The <tt class="docutils literal">tinystdio</tt> of picolibc has smaller versions of <tt class="docutils literal">stdio</tt>
+functions (like <tt class="docutils literal">scanf()</tt>, <tt class="docutils literal">printf()</tt> or <tt class="docutils literal">fopen()</tt>) than newlib.</li>
+<li>There have been some changes that optimize memory usage in libnds: <a class="reference external" href="https://github.com/blocksds/libnds/pull/1">[1]</a>, <a class="reference external" href="https://github.com/blocksds/libnds/pull/2">[2]</a> and <a class="reference external" href="https://github.com/blocksds/libnds/pull/24">[3]</a>.</li>
 <li>BlocksDS doesn't have anything similar to <tt class="docutils literal">devoptab</tt>, which is used in
 devkitARM. While this is very flexible, and very useful in platforms like
 the Wii or Switch, it's too big for the GBA or NDS, where it doesn't offer
@@ -141,13 +143,22 @@ worst thing, as it can be argued that most of them are trivial and copyright
 doesn't apply to them. However, it is a problem for non-trivial code, and it
 looks like the devkitPro maintainers seem to mistakenly believe that the lack
 of a license is fine, and that it <a class="reference external" href="https://github.com/devkitPro/wut/pull/148#issuecomment-652337319">leaves the code in the public domain</a>.</p>
-<p>The biggest problem is that a library crucial for NDS development doesn't have
-any license: <a class="reference external" href="https://github.com/devkitPro/libfilesystem/issues/3">NitroFS</a>
-I tried to contact the original author in every way I could think of with no
-luck. This means that the library isn't open source, and it can't be used
-without permission from the <a class="reference external" href="http://blea.ch/wiki/index.php/Nitrofs">author</a>.
-The devkitPro maintainers aren't interested in fixing this situation.</p>
-<p>BlocksDS does thing in a different way. devkitARM uses <a class="reference external" href="https://github.com/devkitPro/libfat">libfat</a> by Chism to
+<p>They also may be in violation of the <a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPLv3</a> by distributing build scripts
+for GPLv3-licensed software under incompatible <a class="reference external" href="https://github.com/devkitPro/buildscripts/blob/f06196c43cca687108c6f73fe0b48ed01a606d85/build-devkit.sh#L17-L19">restrictive terms</a>.
+Any build scripts for GPLv3 software must also be released under the GPLv3:</p>
+<blockquote>
+<p>The &quot;Corresponding Source&quot; for a work in object code form means all the
+source code needed to generate, install, and (for an executable work) run
+the object code and to modify the work, including scripts to control those
+activities.</p>
+</blockquote>
+<p>The biggest practical problem for BlocksDS is that a library crucial for NDS
+development doesn't have any license: <a class="reference external" href="https://github.com/devkitPro/libfilesystem/issues/3">NitroFS</a>. I tried to contact
+the original author in every way I could think of with no luck. This means
+that the library isn't open source, and it can't be used without permission
+from the <a class="reference external" href="http://blea.ch/wiki/index.php/Nitrofs">author</a>. The devkitPro
+maintainers aren't interested in fixing this situation.</p>
+<p>BlocksDS does thing in a different way. devkitARM uses <a class="reference external" href="https://github.com/devkitPro/libfat">libfat</a> by Chishm to
 access FAT filesystems and interface with the DS hardware, and
 <a class="reference external" href="https://github.com/devkitPro/libfilesystem">libfilesystem</a> to use the filesystem embedded in the NDS ROM (and it uses
 the official filesystem format of the official SDK provided by Nintendo).</p>
@@ -156,7 +167,7 @@ libnds functions. Instead of using the official format of Nintendo, BlocksDS
 uses what I've decided to call <strong>NitroFAT</strong>, which appends a FAT filesystem
 image to the NDS ROM, and it uses FatFs to access it. This allows BlocksDS to
 reuse code, as accessing the filesystem of the SD card and the filesystem of
-the ROM uses the same code. This is one of the reason why NDS programs built
+the ROM uses the same code. This is one of the reasons why NDS programs built
 with BlocksDS are smaller than with devkitARM.</p>
 <p>This took a lot of effort to get working, and it is the best example I can
 think of about why it is important to license your code so that people can
@@ -196,6 +207,10 @@ enough to be able to take photos from the front and back cameras.</p>
 <a class="reference external" href="https://github.com/blocksds/libnds/blob/9763b22fee597025777ec4c853c94d95944ffe37/source/common/fifo_ipc_messages.h">FIFO system</a>, and the code that allows a program to <a class="reference external" href="https://github.com/blocksds/sdk/blob/c7e3f22054dc2b473089d064c3780f6c2fea1889/docs/exit-to-loader.rst">return to the loader</a>
 if the loader supports it.</p>
 </li>
+<li><p class="first">BlocksDS includes versions of <tt class="docutils literal">memcpy()</tt>, <tt class="docutils literal">memset()</tt> and <tt class="docutils literal">memmove()</tt>
+optimmized for the CPUs of the NDS by using <strong>ndsabi</strong>, a fork of <a class="reference external" href="https://github.com/felixjones/agbabi">agbabi</a>
+by felixjones.</p>
+</li>
 <li><p class="first"><strong>ndstool</strong> now supports multiple languages in the banner, as well as icons in
 formats like PNG or GIF (even animated GIFs!).</p>
 </li>
@@ -203,7 +218,7 @@ formats like PNG or GIF (even animated GIFs!).</p>
 </li>
 <li><p class="first"><strong>no$gba</strong> debug messages are now supported in the ARM7, not only ARM9.</p>
 </li>
-<li><p class="first">A few people have started to contribute with bugfixes, like
+<li><p class="first">A few people have started to contribute with bugfixes, like <a class="reference external" href="https://asie.pl/">asie</a>,
 <a class="reference external" href="https://github.com/lifehackerhansol">lifehackerhansol</a> and <a class="reference external" href="https://pk11.us/">Pk11</a>, which I'm very grateful about!</p>
 </li>
 </ul>
@@ -213,8 +228,8 @@ though most code is compatible, there are a few things to consider:</p>
 <li><p class="first">BlocksDS is Linux-only. If you're using Windows, you have the option of
 installing it in WSL. If you're using Mac, or you don't want to use WSL, you
 can use the <a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/docker">Docker images</a> distributed by BlocksDS. There is no native way
-to use BlocksDS on Windows or Mac, and currently there are no plans to support
-them.</p>
+to use BlocksDS on Windows or Mac, and currently there are no immediate plans
+to support them.</p>
 </li>
 <li><p class="first">The Makefiles are completely different from the ones used in devkitARM. For
 most users this won't be a problem, the migration is very easy (it only
@@ -234,12 +249,12 @@ possible to migrate to BlocksDS without big changes.</p>
 </ul>
 <p>Here is a list of projects that now benefit from using BlocksDS:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://github.com/asiekierka/nitrotracker/releases/tag/0.4.3-unofficial">Nitrotracker</a></li>
-<li><a class="reference external" href="https://github.com/asiekierka/vnds/releases/tag/1.4.10-pre">VNDS</a></li>
+<li><a class="reference external" href="https://github.com/angband/angband/pull/5700">Angband</a></li>
 <li><a class="reference external" href="https://github.com/DS-Homebrew/dsbf_dump/releases/tag/v1.0">dsbf_dump</a></li>
-<li><a class="reference external" href="https://github.com/asiekierka/megazeux/tree/port-blocksds">MegaZeux</a></li>
 <li><a class="reference external" href="https://github.com/DS-Homebrew/GameYob">GameYob</a></li>
+<li><a class="reference external" href="https://github.com/asiekierka/nitrotracker/releases/tag/0.4.3-unofficial">NitrousTracker</a></li>
 <li><a class="reference external" href="https://github.com/asiekierka/uxnds/releases/tag/v0.3.7">uxnds</a></li>
+<li><a class="reference external" href="https://github.com/asiekierka/vnds/releases/tag/1.4.10-pre">VNDS</a></li>
 </ul>
 <p>Thanks to the work of the maintainers of the projects it was possible to
 exhaustively test BlocksDS, and it's now stable enough to be used by real
