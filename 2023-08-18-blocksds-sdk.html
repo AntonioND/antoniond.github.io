@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>BlocksDS SDK - SkyLyrac</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./2023-08-18-blocksds-sdk.html">
+
+        <meta name="author" content="Antonio Niño Díaz" />
+        <meta name="keywords" content="programming,nintendo-ds,blocksds" />
+        <meta name="description" content="A few months ago I created BlocksDS, a new SDK for Nintendo DS. It uses libnds, DS WiFI and Maxmod, so it is compatible with projects that use devkitARM. The toolchain it uses comes from Wonderful Toolchains by asie. Its main objective is to remain as compatible as possible with …" />
+
+        <meta property="og:site_name" content="SkyLyrac" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="BlocksDS SDK"/>
+        <meta property="og:url" content="./2023-08-18-blocksds-sdk.html"/>
+        <meta property="og:description" content="A few months ago I created BlocksDS, a new SDK for Nintendo DS. It uses libnds, DS WiFI and Maxmod, so it is compatible with projects that use devkitARM. The toolchain it uses comes from Wonderful Toolchains by asie. Its main objective is to remain as compatible as possible with …"/>
+        <meta property="article:published_time" content="2023-08-18" />
+            <meta property="article:section" content="nintendo-ds" />
+            <meta property="article:tag" content="programming" />
+            <meta property="article:tag" content="nintendo-ds" />
+            <meta property="article:tag" content="blocksds" />
+            <meta property="article:author" content="Antonio Niño Díaz" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/borland.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+
+
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+SkyLyrac            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/about-me.html">
+                             About me
+                          </a></li>
+                         <li><a href="./pages/projects.html">
+                             Projects
+                          </a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+<!-- Banner -->
+<!-- End Banner -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="." title="SkyLyrac"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="./category/nintendo-ds.html" title="nintendo-ds">nintendo-ds</a></li>
+                <li class="active">BlocksDS SDK</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./2023-08-18-blocksds-sdk.html"
+                       rel="bookmark"
+                       title="Permalink to BlocksDS SDK">
+                        BlocksDS SDK
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-08-18T17:44:00+01:00"> Fri 18 August 2023</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/programming.html">programming</a>
+        /
+	<a href="./tag/nintendo-ds.html">nintendo-ds</a>
+        /
+	<a href="./tag/blocksds.html">blocksds</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>A few months ago I created <a class="reference external" href="https://github.com/blocksds/sdk">BlocksDS</a>, a new SDK for Nintendo DS. It uses
+libnds, DS WiFI and Maxmod, so it is compatible with projects that use
+devkitARM. The toolchain it uses comes from <a class="reference external" href="https://wonderful.asie.pl/">Wonderful Toolchains</a> by <a class="reference external" href="https://asie.pl/">asie</a>.</p>
+<p>Its main objective is to remain as compatible as possible with old projects that
+use devkitARM, while adding new features that have been needed for a long time,
+but that would have never been added to the original repositories of devkitPro.</p>
+<p>In order to achieve this, the libraries have been forked, and there are some
+visible improvements over devkitARM already:</p>
+<ul>
+<li><p class="first">Binaries are smaller and they use less RAM. The main two reasons for that are:</p>
+<ul class="simple">
+<li>Instead of using newlib, BlocksDS uses picolibc (thanks to Wonderful
+Toolchains), which is smaller.</li>
+<li>BlocksDS doesn't have anything similar to <tt class="docutils literal">devoptab</tt>, which is used in
+devkitARM. While this is very flexible, and very useful in platforms like
+the Wii or Switch, it's too big for the GBA or NDS, where it doesn't offer
+almost any benefit. There is more information about this change further down
+this article.</li>
+</ul>
+</li>
+<li><p class="first">The <a class="reference external" href="https://github.com/blocksds/sdk/blob/c7e3f22054dc2b473089d064c3780f6c2fea1889/docs/licenses.rst">licensing status</a> of all libraries has been clarified and documented.
+This is important. Anything that doesn't have a license defaults to &quot;all
+rights reserved&quot;, not &quot;public domain&quot;. Many things that devkitPro distributes
+don't have a license. The examples don't have a license, but that's not the
+worst thing, as it can be argued that most of them are trivial and copyright
+doesn't apply to them. However, it is a problem for non-trivial code, and it
+looks like the devkitPro maintainers seem to mistakenly believe that the lack
+of a license is fine, and that it <a class="reference external" href="https://github.com/devkitPro/wut/pull/148#issuecomment-652337319">leaves the code in the public domain</a>.</p>
+<p>The biggest problem is that a library crucial for NDS development doesn't have
+any license: <a class="reference external" href="https://github.com/devkitPro/libfilesystem/issues/3">NitroFS</a>
+I tried to contact the original author in every way I could think of with no
+luck. This means that the library isn't open source, and it can't be used
+without permission from the <a class="reference external" href="http://blea.ch/wiki/index.php/Nitrofs">author</a>.
+The devkitPro maintainers aren't interested in fixing this situation.</p>
+<p>BlocksDS does thing in a different way. devkitARM uses <a class="reference external" href="https://github.com/devkitPro/libfat">libfat</a> by Chism to
+access FAT filesystems and interface with the DS hardware, and
+<a class="reference external" href="https://github.com/devkitPro/libfilesystem">libfilesystem</a> to use the filesystem embedded in the NDS ROM (and it uses
+the official filesystem format of the official SDK provided by Nintendo).</p>
+<p>BlocksDS uses <a class="reference external" href="http://elm-chan.org/fsw/ff/00index_e.html">FatFs</a> by Elm and a thin wrapper on top of libnds to access
+libnds functions. Instead of using the official format of Nintendo, BlocksDS
+uses what I've decided to call <strong>NitroFAT</strong>, which appends a FAT filesystem
+image to the NDS ROM, and it uses FatFs to access it. This allows BlocksDS to
+reuse code, as accessing the filesystem of the SD card and the filesystem of
+the ROM uses the same code. This is one of the reason why NDS programs built
+with BlocksDS are smaller than with devkitARM.</p>
+<p>This took a lot of effort to get working, and it is the best example I can
+think of about why it is important to license your code so that people can
+reuse it when you move on and stop caring about it.</p>
+<p>So, in order to ensure that this project can survive over time, all files in
+all repositories of BlocksDS use <a class="reference external" href="https://spdx.dev/">SPDX</a> identifiers, so that the licensing
+status of all individual files is always clear, which will allow other
+projects to reuse the code of BlocksDS easily if they want. It also allows
+other people to fork BlocksDS if something happens in the future.</p>
+<p>I also talked to the author to change the <a class="reference external" href="https://github.com/blocksds/libnds/issues/30">license of GL2D</a> to Zlib, like the
+rest of <tt class="docutils literal">libnds</tt>.</p>
+</li>
+<li><p class="first">There is now basic multithreading support. <tt class="docutils literal">libnds</tt> wasn't thread-safe, so
+it had to be modified so that multithreading works safely. Thread-local
+storage support has also been added. You can define variables that are
+unique per thread like this:</p>
+<pre class="code c literal-block">
+<span class="n">__thread</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">my_variable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span><span class="p">;</span><span class="w">
+</span><span class="n">__thread</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">other_variable</span><span class="p">;</span>
+</pre>
+</li>
+<li><p class="first">DLDI can now be used from both the ARM9 and ARM7.</p>
+<p>You can make the ARM9 ask the ARM7 to load files in one thread. While the ARM7
+load files the ARM9 can be doing other things in other threads, so you aren't
+blocked. This can also be done when loading files from the SD card of the DSi.
+This has always been one of the limitations that annoyed me about creating
+games with devkitARM, and now it's fixed.</p>
+<p>There is a big issue with DLDI drivers, and it's that some of them have been
+compiled for the ARM9 and can't run on the ARM7. This is why, by default,
+BlocksDS makes them run from the ARM9. The code must explicitly set ARM7 mode,
+or the user needs to use a DLDI driver built with a <a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/tests/dldi_arm9_arm7">new configuration flag</a>.</p>
+</li>
+<li><p class="first">The DSi camera is supported (thanks, asie!). It's still quite basic, but
+enough to be able to take photos from the front and back cameras.</p>
+</li>
+<li><p class="first"><strong>libnds</strong> has been documented in many places, like the <a class="reference external" href="https://github.com/blocksds/libnds/blob/9763b22fee597025777ec4c853c94d95944ffe37/source/arm9/system/mpu_setup.s">MPU setup</a>, the
+<a class="reference external" href="https://github.com/blocksds/libnds/blob/9763b22fee597025777ec4c853c94d95944ffe37/source/common/fifo_ipc_messages.h">FIFO system</a>, and the code that allows a program to <a class="reference external" href="https://github.com/blocksds/sdk/blob/c7e3f22054dc2b473089d064c3780f6c2fea1889/docs/exit-to-loader.rst">return to the loader</a>
+if the loader supports it.</p>
+</li>
+<li><p class="first"><strong>ndstool</strong> now supports multiple languages in the banner, as well as icons in
+formats like PNG or GIF (even animated GIFs!).</p>
+</li>
+<li><p class="first"><strong>libxm7</strong> has been added as an alternative to Maxmod.</p>
+</li>
+<li><p class="first"><strong>no$gba</strong> debug messages are now supported in the ARM7, not only ARM9.</p>
+</li>
+<li><p class="first">A few people have started to contribute with bugfixes, like
+<a class="reference external" href="https://github.com/lifehackerhansol">lifehackerhansol</a> and <a class="reference external" href="https://pk11.us/">Pk11</a>, which I'm very grateful about!</p>
+</li>
+</ul>
+<p>There is guide that helps new users <a class="reference external" href="https://github.com/blocksds/sdk/blob/c7e3f22054dc2b473089d064c3780f6c2fea1889/docs/porting-guide.rst">port devkitARM projects</a> to BlocksDS. Even
+though most code is compatible, there are a few things to consider:</p>
+<ul>
+<li><p class="first">BlocksDS is Linux-only. If you're using Windows, you have the option of
+installing it in WSL. If you're using Mac, or you don't want to use WSL, you
+can use the <a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/docker">Docker images</a> distributed by BlocksDS. There is no native way
+to use BlocksDS on Windows or Mac, and currently there are no plans to support
+them.</p>
+</li>
+<li><p class="first">The Makefiles are completely different from the ones used in devkitARM. For
+most users this won't be a problem, the migration is very easy (it only
+involves copying folder names from the old Makefiles to the new ones).</p>
+</li>
+<li><p class="first">There is no <tt class="docutils literal">devoptab</tt> support. Most likely you've never heard of it or used
+it directly, but <tt class="docutils literal">devoptab</tt> is the way that devkitARM uses to make things
+like filesystem functions work (<tt class="docutils literal">fopen()</tt>, etc), or things like getting the
+time and date from the OS (with <tt class="docutils literal">time()</tt>).</p>
+<p>BlocksDS supports the same features without any intermediate layers (like
+<tt class="docutils literal">devoptab</tt>) between libc functions and the hardware functions. This is one
+of the reasons why binaries generated by BlocksDS are smaller and require less
+RAM to run.</p>
+<p>However, in rare situations where user code uses <tt class="docutils literal">devoptab</tt>, it won't be
+possible to migrate to BlocksDS without big changes.</p>
+</li>
+</ul>
+<p>Here is a list of projects that now benefit from using BlocksDS:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/asiekierka/nitrotracker/releases/tag/0.4.3-unofficial">Nitrotracker</a></li>
+<li><a class="reference external" href="https://github.com/asiekierka/vnds/releases/tag/1.4.10-pre">VNDS</a></li>
+<li><a class="reference external" href="https://github.com/DS-Homebrew/dsbf_dump/releases/tag/v1.0">dsbf_dump</a></li>
+<li><a class="reference external" href="https://github.com/asiekierka/megazeux/tree/port-blocksds">MegaZeux</a></li>
+<li><a class="reference external" href="https://github.com/DS-Homebrew/GameYob">GameYob</a></li>
+<li><a class="reference external" href="https://github.com/asiekierka/uxnds/releases/tag/v0.3.7">uxnds</a></li>
+</ul>
+<p>Thanks to the work of the maintainers of the projects it was possible to
+exhaustively test BlocksDS, and it's now stable enough to be used by real
+projects. A lot of work has been put into all of this by several people, so
+it's great that some projects have started to use it for real!</p>
+<p>Finally, I'd like to mention NFlib and Nitro Engine.</p>
+<ul>
+<li><p class="first"><a class="reference external" href="https://github.com/knightfox75/nds_nflib">NFlib</a> is a library that <a class="reference external" href="https://github.com/knightfox75">NightFox</a> created many years ago. It helps
+developers create 2D games (and it has very basic 3D support). I've spent
+quite a bit of time cleaning it up and documenting the library and examples
+properly by adding Doxygen comments and translating everything from Spanish to
+English (sorry, but it's too easy for the documentation to be outdated if it's
+in multiple languages!).</p>
+<p>I also talked to the author to change the license to MIT instead of Creative
+Commons. Note that Creative Commons is a license that <a class="reference external" href="https://creativecommons.org/faq/#can-i-apply-a-creative-commons-license-to-software">shouldn't be used for
+code</a>).</p>
+</li>
+<li><p class="first"><a class="reference external" href="https://github.com/AntonioND/nitro-engine">Nitro Engine</a> is a library that I created many years ago as well. It's used
+to develop 3D games. I've spent some time over the last few years cleaning it
+up and improving it. In fact, I came up with the idea of BlocksDS when I was
+frustrated because I couldn't implement a system to load assets from the
+filesystem asynchronously with devkitARM.</p>
+</li>
+</ul>
+<p>Both libraries are now fully supported in BlocksDS. The examples in both
+repositories will build with BlocksDS, and Nitro Engine comes with an example of
+how to use both libraries in the same project, which can be found <a class="reference external" href="https://github.com/AntonioND/nitro-engine/tree/db33780b45da84dcdb7aeb7e763dcff995469f04/examples/templates/using_nflib">here</a>.</p>
+<p>At the time of writing this post, the latest version of BlocksDS is <a class="reference external" href="https://github.com/blocksds/sdk/releases/tag/v0.8.1">0.8.1</a>. Give it a try! If you
+find any problems, or you have questions, feel free to open issues in the
+repository (or send a pull request with a fix!).</p>
+<p>P.S.: I haven't written anything in this blog for over 3 years... I still have a
+few more updates to post in the coming days!</p>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="https://github.com/AntonioND"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+    <li class="list-group-item"><a href="https://www.linkedin.com/in/antonio-ni%C3%B1o-d%C3%ADaz-1b150ab7/en"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Categories -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4>
+  <ul class="list-group" id="categories">
+    <li class="list-group-item">
+      <a href="./category/blog.html"><i class="fa fa-folder-open fa-lg"></i>blog</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/electronics.html"><i class="fa fa-folder-open fa-lg"></i>electronics</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/emulation.html"><i class="fa fa-folder-open fa-lg"></i>emulation</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/gameboy.html"><i class="fa fa-folder-open fa-lg"></i>gameboy</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/hacking.html"><i class="fa fa-folder-open fa-lg"></i>hacking</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/hp50g.html"><i class="fa fa-folder-open fa-lg"></i>hp50g</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/nintendo-3ds.html"><i class="fa fa-folder-open fa-lg"></i>nintendo-3ds</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/nintendo-ds.html"><i class="fa fa-folder-open fa-lg"></i>nintendo-ds</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/programming.html"><i class="fa fa-folder-open fa-lg"></i>programming</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/raspberry-pi.html"><i class="fa fa-folder-open fa-lg"></i>raspberry-pi</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Categories -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://www.skylyrac.net/old-site/index.html" target="_blank">My old website</a>
+    </li>
+    <li class="list-group-item">
+      <a href="https://gbadev.net" target="_blank">GBADev discord</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2023 Antonio Niño Díaz
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://www.skylyrac.net/images/cc-by-nc-sa-80x15.png" /></a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+    <script src="./theme/js/bodypadding.js"></script>
+
+
+</body>
+</html>

@@ -180,9 +180,9 @@ to be packaged as one single binary and named <tt class="docutils literal">armst
 <tt class="docutils literal">config.txt</tt> file I added the following lines to tell the loader where to load
 the files in DRAM.</p>
 <pre class="code shell literal-block">
-<span class="nv">enable_uart</span><span class="o">=</span><span class="m">1</span>
-<span class="nv">kernel_address</span><span class="o">=</span>0x01000000
-<span class="nv">device_tree_address</span><span class="o">=</span>0x02000000
+<span class="nv">enable_uart</span><span class="o">=</span><span class="m">1</span><span class="w">
+</span><span class="nv">kernel_address</span><span class="o">=</span>0x01000000<span class="w">
+</span><span class="nv">device_tree_address</span><span class="o">=</span>0x02000000
 </pre>
 <p>One good thing about this unusual bootflow is that it is literally impossible to
 brick the Raspberry Pi, you just need to write the correct files to your SD card
@@ -441,20 +441,20 @@ ended up compiling my own.</p>
 <p>It is really simple, actually, you just have to clone the <a class="reference external" href="https://github.com/raspberrypi/linux">Linux tree fork</a> maintained by the Raspberry Pi
 Foundation and compile it for 64-bit:</p>
 <pre class="code shell literal-block">
-git clone --depth<span class="o">=</span><span class="m">1</span> -b rpi-4.14.y https://github.com/raspberrypi/linux
-<span class="nb">cd</span> linux
-make <span class="nv">ARCH</span><span class="o">=</span>arm64 <span class="nv">CROSS_COMPILE</span><span class="o">=</span>aarch64-linux-gnu- bcmrpi3_defconfig
-make -j <span class="m">6</span> <span class="nv">ARCH</span><span class="o">=</span>arm64 <span class="nv">CROSS_COMPILE</span><span class="o">=</span>aarch64-linux-gnu-
+git<span class="w"> </span>clone<span class="w"> </span>--depth<span class="o">=</span><span class="m">1</span><span class="w"> </span>-b<span class="w"> </span>rpi-4.14.y<span class="w"> </span>https://github.com/raspberrypi/linux<span class="w">
+</span><span class="nb">cd</span><span class="w"> </span>linux<span class="w">
+</span>make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm64<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>aarch64-linux-gnu-<span class="w"> </span>bcmrpi3_defconfig<span class="w">
+</span>make<span class="w"> </span>-j<span class="w"> </span><span class="m">6</span><span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm64<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>aarch64-linux-gnu-
 </pre>
 <p>Then, copy the kernel image and the device tree to the SD card.</p>
 <pre class="code shell literal-block">
-cp arch/arm64/boot/Image /path/to/boot/kernel8.img
-cp arch/arm64/boot/dts/broadcom/bcm2710-rpi-3-b.dtb /path/to/boot/
+cp<span class="w"> </span>arch/arm64/boot/Image<span class="w"> </span>/path/to/boot/kernel8.img<span class="w">
+</span>cp<span class="w"> </span>arch/arm64/boot/dts/broadcom/bcm2710-rpi-3-b.dtb<span class="w"> </span>/path/to/boot/
 </pre>
 <p>Finally, install the kernel modules.</p>
 <pre class="code shell literal-block">
-make <span class="nv">ARCH</span><span class="o">=</span>arm64 <span class="nv">CROSS_COMPILE</span><span class="o">=</span>aarch64-linux-gnu- <span class="se">\
-</span><span class="nv">INSTALL_MOD_PATH</span><span class="o">=</span>/path/to/filesystem modules_install
+make<span class="w"> </span><span class="nv">ARCH</span><span class="o">=</span>arm64<span class="w"> </span><span class="nv">CROSS_COMPILE</span><span class="o">=</span>aarch64-linux-gnu-<span class="w"> </span><span class="se">\
+</span><span class="nv">INSTALL_MOD_PATH</span><span class="o">=</span>/path/to/filesystem<span class="w"> </span>modules_install
 </pre>
 <p>I also had to create a bootstrap in a similar way as I did for the 32-bit
 kernel. It was easier now, though. All the booting information is in the file
@@ -659,13 +659,7 @@ references to <strong>Arm Trusted Firmware</strong> have been replaced by the ne
       <a href="http://www.skylyrac.net/old-site/index.html" target="_blank">My old website</a>
     </li>
     <li class="list-group-item">
-      <a href="http://www.pouet.net" target="_blank">pouët.net</a>
-    </li>
-    <li class="list-group-item">
-      <a href="http://gbdev.gg8.se/forums" target="_blank">GBDev</a>
-    </li>
-    <li class="list-group-item">
-      <a href="http://forum.gbadev.org" target="_blank">GBADev</a>
+      <a href="https://gbadev.net" target="_blank">GBADev discord</a>
     </li>
   </ul>
 </li>
@@ -680,7 +674,7 @@ references to <strong>Arm Trusted Firmware</strong> have been replaced by the ne
    <div class="container">
       <hr>
       <div class="row">
-         <div class="col-xs-10">&copy; 2020 Antonio Niño Díaz
+         <div class="col-xs-10">&copy; 2023 Antonio Niño Díaz
             &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
             <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
             <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://www.skylyrac.net/images/cc-by-nc-sa-80x15.png" /></a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</small></p>
