@@ -231,11 +231,9 @@ formats like PNG or GIF (even animated GIFs!).</p>
 <p>There is guide that helps new users <a class="reference external" href="https://github.com/blocksds/sdk/blob/c7e3f22054dc2b473089d064c3780f6c2fea1889/docs/porting-guide.rst">port devkitARM projects</a> to BlocksDS. Even
 though most code is compatible, there are a few things to consider:</p>
 <ul>
-<li><p class="first">BlocksDS is Linux-only. If you're using Windows, you have the option of
-installing it in WSL. If you're using Mac, or you don't want to use WSL, you
-can use the <a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/docker">Docker images</a> distributed by BlocksDS. There is no native way
-to use BlocksDS on Windows or Mac, and currently there are no immediate plans
-to support them.</p>
+<li><p class="first">BlocksDS is available on Windows and Linux. If you're using Mac, you can use
+the <a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/docker">Docker images</a> distributed by BlocksDS. There is no native way to use
+BlocksDS on Mac, and currently there are no immediate plans to support it.</p>
 </li>
 <li><p class="first">The Makefiles are completely different from the ones used in devkitARM. For
 most users this won't be a problem, the migration is very easy (it only
@@ -293,6 +291,10 @@ find any problems, or you have questions, feel free to open issues in the
 repository (or send a pull request with a fix!).</p>
 <p>P.S.: I haven't written anything in this blog for over 3 years... I still have a
 few more updates to post in the coming days!</p>
+<p><strong>Update</strong></p>
+<p>This post has been updated on 2023-09-06 to reflect the fact that Windows is now
+supported by Wonderful Toolchains, which enables BlocksDS to work on Windows
+natively.</p>
 
             </div>
             <!-- /.entry-content -->

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SkyLyrac</title><link href="http://www.skylyrac.net/" rel="alternate"></link><link href="http://www.skylyrac.net/feeds/all.atom.xml" rel="self"></link><id>http://www.skylyrac.net/</id><updated>2023-08-18T19:09:00+01:00</updated><entry><title>BlocksDS SDK</title><link href="http://www.skylyrac.net/2023-08-18-blocksds-sdk.html" rel="alternate"></link><published>2023-08-18T17:44:00+01:00</published><updated>2023-08-18T19:09:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2023-08-18:/2023-08-18-blocksds-sdk.html</id><summary type="html">&lt;p&gt;A few months ago I created &lt;a class="reference external" href="https://github.com/blocksds/sdk"&gt;BlocksDS&lt;/a&gt;, a new SDK for Nintendo DS. It uses
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SkyLyrac</title><link href="http://www.skylyrac.net/" rel="alternate"></link><link href="http://www.skylyrac.net/feeds/all.atom.xml" rel="self"></link><id>http://www.skylyrac.net/</id><updated>2023-09-06T10:14:00+01:00</updated><entry><title>BlocksDS SDK</title><link href="http://www.skylyrac.net/2023-08-18-blocksds-sdk.html" rel="alternate"></link><published>2023-08-18T17:44:00+01:00</published><updated>2023-09-06T10:14:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2023-08-18:/2023-08-18-blocksds-sdk.html</id><summary type="html">&lt;p&gt;A few months ago I created &lt;a class="reference external" href="https://github.com/blocksds/sdk"&gt;BlocksDS&lt;/a&gt;, a new SDK for Nintendo DS. It uses
 libnds, DS WiFI and Maxmod, so it is compatible with projects that use
 devkitARM. The toolchain it uses comes from &lt;a class="reference external" href="https://wonderful.asie.pl"&gt;Wonderful Toolchains&lt;/a&gt; by &lt;a class="reference external" href="https://asie.pl/"&gt;asie&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;Its main objective is to remain as compatible as possible with …&lt;/p&gt;</summary><content type="html">&lt;p&gt;A few months ago I created &lt;a class="reference external" href="https://github.com/blocksds/sdk"&gt;BlocksDS&lt;/a&gt;, a new SDK for Nintendo DS. It uses
@@ -114,11 +114,9 @@ formats like PNG or GIF (even animated GIFs!).&lt;/p&gt;
 &lt;p&gt;There is guide that helps new users &lt;a class="reference external" href="https://github.com/blocksds/sdk/blob/c7e3f22054dc2b473089d064c3780f6c2fea1889/docs/porting-guide.rst"&gt;port devkitARM projects&lt;/a&gt; to BlocksDS. Even
 though most code is compatible, there are a few things to consider:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;&lt;p class="first"&gt;BlocksDS is Linux-only. If you're using Windows, you have the option of
-installing it in WSL. If you're using Mac, or you don't want to use WSL, you
-can use the &lt;a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/docker"&gt;Docker images&lt;/a&gt; distributed by BlocksDS. There is no native way
-to use BlocksDS on Windows or Mac, and currently there are no immediate plans
-to support them.&lt;/p&gt;
+&lt;li&gt;&lt;p class="first"&gt;BlocksDS is available on Windows and Linux. If you're using Mac, you can use
+the &lt;a class="reference external" href="https://github.com/blocksds/sdk/tree/c7e3f22054dc2b473089d064c3780f6c2fea1889/docker"&gt;Docker images&lt;/a&gt; distributed by BlocksDS. There is no native way to use
+BlocksDS on Mac, and currently there are no immediate plans to support it.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p class="first"&gt;The Makefiles are completely different from the ones used in devkitARM. For
 most users this won't be a problem, the migration is very easy (it only
@@ -176,6 +174,10 @@ find any problems, or you have questions, feel free to open issues in the
 repository (or send a pull request with a fix!).&lt;/p&gt;
 &lt;p&gt;P.S.: I haven't written anything in this blog for over 3 years... I still have a
 few more updates to post in the coming days!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Update&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;This post has been updated on 2023-09-06 to reflect the fact that Windows is now
+supported by Wonderful Toolchains, which enables BlocksDS to work on Windows
+natively.&lt;/p&gt;
 </content><category term="nintendo-ds"></category><category term="programming"></category><category term="nintendo-ds"></category><category term="blocksds"></category></entry><entry><title>Raspberry Pi LED ambient lamp</title><link href="http://www.skylyrac.net/2020-06-27-rpi-led-ambient-lamp.html" rel="alternate"></link><published>2020-06-27T13:27:00+01:00</published><updated>2020-06-27T13:27:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2020-06-27:/2020-06-27-rpi-led-ambient-lamp.html</id><summary type="html">&lt;p&gt;A few months ago (before the lockdown started) I was shopping at the Cambridge
 city center, I popped by the &lt;a class="reference external" href="https://www.raspberrypi.org/raspberry-pi-store/"&gt;Raspberry Pi Store&lt;/a&gt; and I saw something called
 &lt;a class="reference external" href="https://shop.pimoroni.com/products/mood-light-pi-zero-w-project-kit"&gt;Mood Light - Pi Zero W Project Kit&lt;/a&gt;. This is basically a kit that contains:&lt;/p&gt;
