@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
+<head>
+    <title>Dual screen 3D on the NDS - SkyLyrac</title>
+    <!-- Using the latest rendering mode for IE -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+<link rel="canonical" href="./2023-10-12-dual-screen-3d-on-nds.html">
+
+        <meta name="author" content="Antonio Niño Díaz" />
+        <meta name="keywords" content="programming,nintendo-ds,nitro-engine" />
+        <meta name="description" content="The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of features. Normally it can only be used to display 3D graphics on one screen, but it is possible to display 3D on both screens by using a special video capture circuit. This technique isn&#39;t …" />
+
+        <meta property="og:site_name" content="SkyLyrac" />
+        <meta property="og:type" content="article"/>
+        <meta property="og:title" content="Dual screen 3D on the NDS"/>
+        <meta property="og:url" content="./2023-10-12-dual-screen-3d-on-nds.html"/>
+        <meta property="og:description" content="The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of features. Normally it can only be used to display 3D graphics on one screen, but it is possible to display 3D on both screens by using a special video capture circuit. This technique isn&#39;t …"/>
+        <meta property="article:published_time" content="2023-10-12" />
+            <meta property="article:section" content="nintendo-ds" />
+            <meta property="article:tag" content="programming" />
+            <meta property="article:tag" content="nintendo-ds" />
+            <meta property="article:tag" content="nitro-engine" />
+            <meta property="article:author" content="Antonio Niño Díaz" />
+
+
+
+    <!-- Bootstrap -->
+        <link rel="stylesheet" href="./theme/css/bootstrap.min.css" type="text/css"/>
+    <link href="./theme/css/font-awesome.min.css" rel="stylesheet">
+
+    <link href="./theme/css/pygments/borland.css" rel="stylesheet">
+    <link rel="stylesheet" href="./theme/css/style.css" type="text/css"/>
+
+        <link href="./feeds/all.atom.xml" type="application/atom+xml" rel="alternate"
+              title="SkyLyrac ATOM Feed"/>
+
+        <link href="./feeds/all.rss.xml" type="application/rss+xml" rel="alternate"
+              title="SkyLyrac RSS Feed"/>
+
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="./" class="navbar-brand">
+SkyLyrac            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav">
+                         <li><a href="./pages/about-me.html">
+                             About me
+                          </a></li>
+                         <li><a href="./pages/projects.html">
+                             Projects
+                          </a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+</div> <!-- /.navbar -->
+
+<!-- Banner -->
+<!-- End Banner -->
+
+<!-- Content Container -->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-9">
+            <ol class="breadcrumb">
+                <li><a href="." title="SkyLyrac"><i class="fa fa-home fa-lg"></i></a></li>
+                <li><a href="./category/nintendo-ds.html" title="nintendo-ds">nintendo-ds</a></li>
+                <li class="active">Dual screen 3D on the NDS</li>
+            </ol>
+    <section id="content">
+        <article>
+            <header class="page-header">
+                <h1>
+                    <a href="./2023-10-12-dual-screen-3d-on-nds.html"
+                       rel="bookmark"
+                       title="Permalink to Dual screen 3D on the NDS">
+                        Dual screen 3D on the NDS
+                    </a>
+                </h1>
+            </header>
+            <div class="entry-content">
+                <div class="panel">
+                    <div class="panel-body">
+<footer class="post-info">
+    <span class="label label-default">Date</span>
+    <span class="published">
+        <i class="fa fa-calendar"></i><time datetime="2023-10-12T21:36:00+01:00"> Thu 12 October 2023</time>
+    </span>
+
+
+
+
+
+<span class="label label-default">Tags</span>
+	<a href="./tag/programming.html">programming</a>
+        /
+	<a href="./tag/nintendo-ds.html">nintendo-ds</a>
+        /
+	<a href="./tag/nitro-engine.html">nitro-engine</a>
+    
+</footer><!-- /.post-info -->                    </div>
+                </div>
+                <p>The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of
+features. Normally it can only be used to display 3D graphics on one screen, but
+it is possible to display 3D on both screens by using a special video capture
+circuit.</p>
+<p>This technique isn't straightforward. The video hardware of the NDS is very
+flexible, and there are several ways to achieve 3D graphics on both screens.</p>
+<p>Over the last few weeks I've been working on improving the dual screen 3D
+support of <a class="reference external" href="https://github.com/AntonioND/nitro-engine">Nitro Engine</a>. It has
+never been particularly reliable (when the framerate drops, the same output is
+shown in both screens), and it is important that it is reliable because games
+that use dual 3D are also likely to push the 3D hardware to the limit, and to
+have framerate drops every now and then.</p>
+<p>This post is a very detailed explanation of how I've implemented things in Nitro
+Engine. I've explained the reasons why each mode may be used, as well as their
+limitations.</p>
+<p>If this post is too long for you to read, just use <tt class="docutils literal">NE_InitDual3D_DMA()</tt> in
+your games and skip the read! However, feel free to keep reading if you care
+about the details about how all of it is implemented.</p>
+<p>Something that applies to all the systems is that the 3D engine can only send
+the output to one of the two screens during a specific frame. Any dual 3D setup
+implies saving that 3D engine output to VRAM and displaying it on the other
+screen during the following frame. Essentially, the main graphics engine and sub
+graphics engine need to switch from one screen to the other after every frame.</p>
+<p>A huge thanks to mtheal and JustBurn for the <a class="reference external" href="https://mtheall.com/banks.html">NDS Homebrew VRAM Banks Selector</a> and the <a class="reference external" href="https://mtheall.com/vram.html">NDS Homebrew VRAM BG Allocation
+Conflict Viewer</a>, tools that made my life a lot
+easier when working on this. Check them out, and their source code on <a class="reference external" href="https://github.com/mtheall/vram">GitHub</a>.</p>
+<div class="section" id="memory-usage">
+<h2>1. Memory usage</h2>
+<p>First of all, it is important to mention that dual 3D comes at a big cost. It is
+impossible to have dual 3D without using two of the main VRAM banks (A, B, C and
+D) as framebuffers. This means that half of the memory that the developer can
+allocate for textures won't be available at all. There are two main things to
+consider:</p>
+<ul class="simple">
+<li>Compressed textures: They are the most efficient way to have textures in VRAM,
+and they need to be stored in a combination of VRAM A and B or VRAM B and C.
+All the dual 3D modes of Nitro Engine leave VRAM banks A and B available for
+textures, so compressed textures can be used.</li>
+<li>Clear bitmap: It is possible to store a bitmap with its own depth map (sort of
+a Z-buffer for the bitmap) in VRAM banks C and D. While this is an interesting
+feature, it isn't used nearly enough to worry about it, as it is a very
+inefficient way to use VRAM (it requires 50% of the texture VRAM). In dual 3D
+mode the developer can only use only 50% of the total memory available for
+textures, so clear bitmaps aren't useful.</li>
+</ul>
+<p>This is a comparative table of all modes supported by Nitro Engine and how the
+different VRAM banks are used. Each mode will be explained in each own section:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="23%" />
+<col width="23%" />
+<col width="23%" />
+<col width="23%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">&nbsp;</th>
+<th class="head">Single screen 3D</th>
+<th class="head">Dual screen 3D</th>
+<th class="head">Dual 3D FB</th>
+<th class="head">Dual 3D DMA</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>VRAM A</td>
+<td rowspan="4">3D textures [1]</td>
+<td rowspan="2">3D textures</td>
+<td rowspan="2">3D textures</td>
+<td rowspan="2">3D textures</td>
+</tr>
+<tr><td>VRAM B</td>
+</tr>
+<tr><td>VRAM C</td>
+<td>Framebuffer 1</td>
+<td>Framebuffer 1</td>
+<td>Framebuffer 1 +
+Debug console [3]</td>
+</tr>
+<tr><td>VRAM D</td>
+<td>Framebuffer 2</td>
+<td>Framebuffer 2</td>
+<td>Framebuffer 2</td>
+</tr>
+<tr><td>VRAM E</td>
+<td>3D palettes</td>
+<td>3D palettes</td>
+<td>3D palettes</td>
+<td>3D palettes</td>
+</tr>
+<tr><td>VRAM F</td>
+<td>Debug console</td>
+<td>Debug console</td>
+<td>[2]</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>VRAM G</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>VRAM H</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>VRAM I</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>Pseudo FB +
+Debug console [3]</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Note [1]: It is possible to tell Nitro Engine to not use specific VRAM banks out
+of A, B, C and D. This is useful when using Nitro Engine at the same time as
+some other library like NFlib. It is also possible to tell Nitro Engine to not
+use VRAM banks A or B in dual 3D mode, but this isn't normally useful.</p>
+<p>Note [2]: The debug console isn't supported in this mode.</p>
+<p>Note [3]: The debug console is replicated in both VRAM I and the space of VRAM C
+that isn't used by the video capture. This also means that enabling the debug
+console doesn't require any additional memory banks, unlike in other modes
+(however, it uses a bit of CPU). More details below.</p>
+</div>
+<div class="section" id="the-capture-unit">
+<h2>2. The capture unit</h2>
+<p>The capture unit allows you to capture the output of the main graphics engine.
+It is possible to capture the 3D output by itself before any layering effect,
+or the combined 2D+3D output. This last mode is useful if you want to display a
+2D background on top of the 3D output, and then display that on the other
+screen. In Nitro Engine this is used to display the debug console on top of the
+3D output.</p>
+<p>It is a very flexible unit. It lets you select the size of the capture, the VRAM
+bank used as destination (A, B, C or D), and even an offset for the destination
+bank (for example, if you want to start saving the captured output after the
+first fourth of the bank). Check <a class="reference external" href="https://problemkaputt.de/gbatek.htm#dsvideodisplaysystemblockdiagram">GBATEK</a> for
+more information.</p>
+<p>The only problem with this unit is that the destination bank must be mapped to
+the CPU (LCD mode if you are using libnds). This restricts a lot what you can
+do. There is a mode that lets you use the contents in VRAM as a framebuffer even
+when it is mapped to the CPU, but it doesn't let you layer anything on top of
+it.</p>
+</div>
+<div class="section" id="single-screen-3d-mode">
+<h2>3. Single screen 3D mode</h2>
+<p>Before talking about dual 3D, let's start with single screen 3D, which is easier
+to explain. VRAM banks are used like this:</p>
+<ul class="simple">
+<li>VRAM A, B, C, D: Textures.</li>
+<li>VRAM E: Texture palettes.</li>
+<li>VRAM F: Debug console (if it is enabled).</li>
+</ul>
+<p>The output in the main screen is:</p>
+<ul class="simple">
+<li>Layer 0: 3D output</li>
+</ul>
+<p>When the debug console is enabled, it changes a bit. The priorities of layers 0
+and 1 are swapped so that the debug console appears on top of the 3D output.
+VRAM F is setup as main engine background memory, and:</p>
+<ul class="simple">
+<li>Layer 0: 3D output, priority 1.</li>
+<li>Layer 1: Debug console, priority 0.</li>
+</ul>
+</div>
+<div class="section" id="dual-screen-3d-mode">
+<h2>4. Dual screen 3D mode</h2>
+<p>The source code <a class="reference external" href="https://github.com/AntonioND/nitro-engine/blob/8c323c7e2c29bf0b52951ac2756139026f09f269/source/NEGeneral.c#L608">for regular dual 3D mode is here</a>
+and <a class="reference external" href="https://github.com/AntonioND/nitro-engine/blob/8c323c7e2c29bf0b52951ac2756139026f09f269/source/NEGeneral.c#L493">the source code for the console initialization is here</a>.</p>
+<p>This is the traditional way to handle dual 3D, and it is used in multiple
+examples that can be found <a class="reference external" href="https://github.com/devkitPro/nds-examples/blob/6afa09b2054c9f47685514c32873b3905721c9ee/Graphics/3D/3D_Both_Screens/source/template.c">online</a>.</p>
+<p>VRAM banks are used like this:</p>
+<ul class="simple">
+<li>VRAM A, B: Textures.</li>
+<li>VRAM C, D: Framebuffers.</li>
+<li>VRAM E: Texture palettes.</li>
+<li>VRAM F: Debug console of main screen (if it is enabled).</li>
+</ul>
+<p><strong>Odd frames:</strong></p>
+<ul class="simple">
+<li>VRAM C is mapped as sub engine background. It holds a 16 bit framebuffer.</li>
+<li>VRAM D is mapped to the CPU.</li>
+<li>VRAM F is mapped as main engine background. It holds the debug console.</li>
+</ul>
+<p>The output of the main screen is the combined output of the 3D engine and the
+main 2D engine, which displays the debug console.</p>
+<p>The output of the sub screen is the background stored in VRAM C.</p>
+<p>The capture unit takes as input the same output as the main screen.</p>
+<p><strong>Even frames:</strong></p>
+<ul class="simple">
+<li>VRAM C is mapped to the CPU.</li>
+<li>VRAM D is mapped as sub engine sprites. It holds a 16 bit framebuffer.</li>
+<li>VRAM F isn't used.</li>
+</ul>
+<p>The output of the main screen is the combined output of the 3D engine and the
+main 2D engine, which isn't showing anything right now.</p>
+<p>The output of the sub screen is the background stored in VRAM D. However, it
+isn't possible to use VRAM D as sub engine background memory, so a grid of 64x64
+sprites is setup so that they display the contents of VRAM D as a 256x192 image.</p>
+<p>The capture unit takes as input the same output as the main screen.</p>
+<img alt="Dual 3D diagram" class="align-center" src="./images/ne_dual_3d.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li>The latency of the 3D rendered image is zero. It is directly displayed on the
+screen without any delay.</li>
+<li>The screen effects based on changing the horizontal scroll every scanline
+work.</li>
+<li>The debug console is supported.</li>
+<li>No CPU or DMA processing is needed.</li>
+<li>All 256x192 pixels of the screens are used.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul>
+<li><p class="first">If the framerate ever drops below 60 FPS, the same 3D output will be displayed
+on both screens until the next frame is rendered. It can happen when loading
+assets at runtime, for example. This happens because only one frame is
+actually displayed from a framebuffer. The other one depends on the actual
+output of the 3D graphics engine.</p>
+<p>While screen A is displayed from a framebuffer, the framebuffer of screen B is
+capturing the output of the new screen B. During the next frame, if screen A
+can't be drawn, the framebuffer of screen B will be displayed from a
+framebuffer while the 3D engine still displays the previous screen, which is
+screen B.</p>
+</li>
+<li><p class="first">The textures and palettes of the NDS use 15 bit colors, that is, they use 5
+bits per component (R, G, B). However, the LCD screen of the NDS uses 6 bits
+per component. Normally the least significant bit isn't used, but it can be
+used if two poligons are blended together, for example.</p>
+<p>This is a problem because the video capture unit doesn't capture the 6 bits.
+If the output switches between actual 3D output and captured 3D output the
+user may notice that the image changes slightly between frames.</p>
+</li>
+<li><p class="first">The debug console requires an additional VRAM bank, even if it's one of the
+small ones.</p>
+</li>
+</ul>
+<p><strong>Conclusion:</strong></p>
+<p>I discourage you from using this mode. It's too easy to fall below 60 FPS and
+hit the issue where both screens will show the same output.</p>
+</div>
+<div class="section" id="dual-screen-3d-fb-mode">
+<h2>5. Dual screen 3D FB mode</h2>
+<p>The source code <a class="reference external" href="https://github.com/AntonioND/nitro-engine/blob/8c323c7e2c29bf0b52951ac2756139026f09f269/source/NEGeneral.c#L670">for dual 3D FB mode is here</a>.</p>
+<p>This is another well-known way to handle dual 3D, but it prevents you from using
+the 2D engine in the screen that is being updated in that frame. This prevents
+us from displaying a debug console in one screen because it would only be
+displayed there half of the frames.</p>
+<p>It is named after the <tt class="docutils literal">MODE_FB2</tt> and <tt class="docutils literal">MODE_FB3</tt> constants of <a class="reference external" href="https://github.com/blocksds/libnds/blob/21ad6a51f5ffff00fa47e9a17f8547a46036933f/include/nds/arm9/video.h#L497-L500">libnds</a>.</p>
+<p>VRAM banks are used like this:</p>
+<ul class="simple">
+<li>VRAM A, B: Textures.</li>
+<li>VRAM C, D: Framebuffers.</li>
+<li>VRAM E: Texture palettes.</li>
+</ul>
+<p><strong>Odd frames:</strong></p>
+<ul class="simple">
+<li>VRAM C is mapped as sub engine background. It holds a 16 bit framebuffer.</li>
+<li>VRAM D is mapped to the CPU.</li>
+</ul>
+<p>The main engine is setup in direct VRAM display mode, so the output of the main
+screen is the contents of VRAM D.</p>
+<p>The output of the sub screen is the background stored in VRAM C.</p>
+<p>The capture unit takes as input the 3D output directly, and it saved it to VRAM
+D, which can be accessed by the capture hardware because it's mapped to the CPU.</p>
+<p><strong>Even frames:</strong></p>
+<ul class="simple">
+<li>VRAM C is mapped to the CPU.</li>
+<li>VRAM D is mapped as sub engine sprites. It holds a 16 bit framebuffer.</li>
+</ul>
+<p>The main engine is setup in direct VRAM display mode, so the output of the main
+screen is the contents of VRAM C.</p>
+<p>The output of the sub screen is the background stored in VRAM D. However, it
+isn't possible to use VRAM D as sub engine background memory, so a grid of 64x64
+sprites is setup so that they display the contents of VRAM D as a 256x192 image.</p>
+<p>The capture unit takes as input the 3D output directly, and it saved it to VRAM
+C, which can be accessed by the capture hardware because it's mapped to the CPU.</p>
+<img alt="Dual 3D diagram in FB mode" class="align-center" src="./images/ne_dual_3d_fb.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li>If the framerate ever drops below 60 FPS, the output of both screens will be
+stable, no matter how long the wait is until the next frame is rendered.</li>
+<li>No CPU or DMA processing is needed.</li>
+<li>All 256x192 pixels of the screens are used.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul class="simple">
+<li>The latency of the 3D rendered image is high. The capture unit saves the 3D
+output to the same bank that is being used as framebuffer, but it is saved
+at the same time the framebuffer is sent to the screen, which means the actual
+output is frame stored in the framebuffer from the last time it was drawn, 2
+frames ago.</li>
+<li>The screen effects based on changing the horizontal scroll every scanline
+don't work.</li>
+<li>The debug test console can't be used. The main screen always uses the contents
+of VRAM directly, it isn't possible to layer anything on top of it. The main
+and sub screens switch every frame, so it wouldn't be possible to display a
+stable console on any screen.</li>
+</ul>
+<p><strong>Conclusion:</strong></p>
+<p>The high latency of this mode may make it unsuitable for fast-paced games.
+Also, due to the lack of a usable debug text console, it may not be useful for
+developers.</p>
+<p>If latency isn't an issue in your game, it is possible to use this mode for the
+release version of the game, after you don't rely on the debug console for
+anything.</p>
+</div>
+<div class="section" id="dual-screen-3d-dma-mode">
+<h2>6. Dual screen 3D DMA mode</h2>
+<p>The source code <a class="reference external" href="https://github.com/AntonioND/nitro-engine/blob/8c323c7e2c29bf0b52951ac2756139026f09f269/source/NEGeneral.c#L735">for this mode is here</a>
+and <a class="reference external" href="https://github.com/AntonioND/nitro-engine/blob/8c323c7e2c29bf0b52951ac2756139026f09f269/source/NEGeneral.c#L518">this is the code to initialize the debug console</a>.</p>
+<p>Thanks to <a class="reference external" href="https://github.com/Gericom">Gericom</a> for all the advice regarding
+this system!</p>
+<p>This system is the most complex one, by far. It combines the ability of having
+stable output with low framerates, the ability of showing special effects, and
+the ability to have a debug console. However, this has a cost in CPU time.</p>
+<p>It is always required to use 2 VRAM banks to hold the two framebuffers of the
+screens. This mode is similar to the previous one, but it takes the current VRAM
+bank used as destination of the video capture unit, and it copies it to a pseudo
+framebuffer in VRAM I with DMA. By copying every line right after it has been
+drawn it is possible to use VRAM I as a 16 bit bitmap.</p>
+<p>The main problem is that VRAM I isn't big enough to hold a full 256x192. The
+workaround is to either write out of bounds and rely on the mirroring of
+addresses of VRAM I, or to only copy to the first line of VRAM I, and to stretch
+it to fill the whole screen. Nitro Engine uses this last system so that the rest
+of VRAM I can be used for other things.</p>
+<p>VRAM banks are used like this:</p>
+<ul class="simple">
+<li>VRAM A, B: Textures.</li>
+<li>VRAM C: Framebuffer of main screen and debug console of main screen.</li>
+<li>VRAM D: Framebuffer.</li>
+<li>VRAM E: Texture palettes.</li>
+<li>VRAM I: Pseudo framebuffer and debug console of sub screen.</li>
+</ul>
+<p>As you can see, there are two copies of the console. This is done to save VRAM.
+In short, there is a lot of unused memory in VRAM C, D and I with this setup.
+In odd frames the console is displayed on the sub screen from VRAM I; in even
+frames it is displayed in the main screen from VRAM C.</p>
+<p><strong>Odd frames:</strong></p>
+<ul class="simple">
+<li>VRAM C is mapped to the CPU.</li>
+<li>VRAM D is mapped as main engine background. It holds a 16 bit framebuffer.</li>
+<li>VRAM I is mapped as sub engine background. It holds one line of a 16 bit
+framebuffer, as well as the debug console.</li>
+</ul>
+<p>The output of the main screen is the framebuffer stored in VRAM D.</p>
+<p>The output of the sub screen is the pseudo framebuffer stored in VRAM I, with
+the debug console on top of it.</p>
+<p>The capture unit takes as input the 3D output. This is stored in VRAM C. The
+important thing is that the image is written to VRAM C at the same rate it would
+be drawn on the screen. If the DMA is setup to copy from VRAM C to VRAM I right
+after each line is written to VRAM C, it is possible to display the captured
+image right away. The only problem with this is that there is a one scanline
+delay in the copy, so the first line of the screen won't be able to show
+anything useful. In Nitro Engine, the vertical blank interrupt handler sets it
+to black so that it doesn't show different values every frame.</p>
+<p>Finally, that one line is stretched to fill the whole screen, and that's how by
+simply copying the line every horizontal blanking period the screen can be
+filled with different lines.</p>
+<p>This is different than in the dual 3D FB mode. In the FB mode it isn't possible
+to have this delay, so the image displayed on the screen is the one rendered 2
+frames ago. In DMA mode the image being displayed is the one rendered this
+frame.</p>
+<p><strong>Even frames:</strong></p>
+<ul class="simple">
+<li>VRAM C is mapped as main engine background. It holds a 16 bit framebuffer.</li>
+<li>VRAM D is mapped to the CPU.</li>
+<li>VRAM I is mapped as sub engine background. It holds one line of a 16 bit
+framebuffer, as well as the debug console (but the debug console isn't used
+right now).</li>
+</ul>
+<p>The output of the main screen is the framebuffer stored in VRAM C, with the
+debug console stored in VRAM C on top of it.</p>
+<p>The output of the sub screen is the pseudo framebuffer stored in VRAM I.</p>
+<p>The capture unit takes as input the 3D output. The same notes about the DMA
+apply as in odd frames.</p>
+<img alt="Dual 3D diagram in DMA mode" class="align-center" src="./images/ne_dual_3d_dma.png" />
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Note that VRAM D doesn't require a copy of the console, only VRAM C and I. Also,
+libnds only supports printing to one console at a time, so it is needed to load
+the font to both VRAM C and I, setup the map there, and then synchronize both
+maps manually. Which bank to use as main console bank? VRAM I, because it is
+always mapped as sub background RAM. Nitro Engine copies the map from VRAM I to
+VRAM C whenever VRAM C is mapped as main background RAM.</p>
+<p>VRAM C (128 KB) is arranged like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="46%" />
+<col width="13%" />
+<col width="41%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Memory range</th>
+<th class="head">Size</th>
+<th class="head">Used as</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0x06000000 - 0x06001000</td>
+<td>4 KB</td>
+<td>Tile base 0</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>Free</td>
+</tr>
+<tr><td>0x06004000 - 0x06004800</td>
+<td>2 KB</td>
+<td>Map base 8</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>Free</td>
+</tr>
+<tr><td>0x06008000 - 0x06020000</td>
+<td>96 KB</td>
+<td>BMP base 0 (256x192)</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>VRAM viewer: <a class="reference external" href="https://mtheall.com/vram.html#T1=3&amp;NT1=128&amp;MB1=8&amp;TB1=0&amp;T2=6&amp;MB2=2&amp;S2=1">https://mtheall.com/vram.html#T1=3&amp;NT1=128&amp;MB1=8&amp;TB1=0&amp;T2=6&amp;MB2=2&amp;S2=1</a></p>
+<p>The reason to shift the framebuffer is that map bases over index 31 can't be
+accessed normally. It requires setting DISPCNT map base 64 KB step to a non-zero
+value, which would affect all backgrounds. By shifting the bitmap it is possible
+to use low indices and not have to worry about DISPCNT.</p>
+<p>VRAM I (16 KB) is arranged like this:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="37%" />
+<col width="10%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Memory range</th>
+<th class="head">Size</th>
+<th class="head">Used as</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>0x06208000 - 0x06208200</td>
+<td>512 B</td>
+<td>Framebuffer (one line, 256 pixels)</td>
+</tr>
+<tr><td>0x06208000 - 0x06209000</td>
+<td>4 KB</td>
+<td>Tile base 2</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>Free</td>
+</tr>
+<tr><td>0x0620B800 - 0x0620C000</td>
+<td>2 KB</td>
+<td>Map base 23</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>VRAM viewer: <a class="reference external" href="https://mtheall.com/vram.html#SUB=1&amp;T1=3&amp;NT1=128&amp;MB1=23&amp;TB1=2&amp;T2=6&amp;MB2=2&amp;S2=0">https://mtheall.com/vram.html#SUB=1&amp;T1=3&amp;NT1=128&amp;MB1=23&amp;TB1=2&amp;T2=6&amp;MB2=2&amp;S2=0</a></p>
+<p>Yes, there is an overlap between the framebuffer and the tileset. The size of
+each tileset slot is 16 KB, so there is only space for one tileset in VRAM I.
+Unfortunately, there is also only one slot for bitmaps in VRAM I, as they are
+organized in 16 KB slots. Both slots need to share the space.</p>
+<p>Luckily, 256 bytes for a 4 bpp tileset uses the same amount of memory as 8 tiles:
+256 / (8 * 8 * 4 / 8) = 8. The first characters of the console correspond to
+non-printable ASCII characters, so this overlap isn't a real issue as the first
+8 characters won't ever be shown anyway.</p>
+<p><strong>Advantages:</strong></p>
+<ul class="simple">
+<li>If the framerate ever drops below 60 FPS, the output of both screens will be
+stable, no matter how long the wait is until the next frame is rendered.</li>
+<li>The latency of the 3D rendered image is zero. It is directly displayed on the
+screen without any delay.</li>
+<li>The screen effects based on changing the horizontal scroll every scanline
+work.</li>
+<li>The debug console is supported.</li>
+</ul>
+<p><strong>Disadvantages:</strong></p>
+<ul class="simple">
+<li>Some CPU and DMA processing is needed.</li>
+<li>Display lists can't be sent to the GPU using the DMA in GFX FIFO mode because
+of the conflicts with the HBL DMA used to copy frames from VRAM C and D to
+VRAM I. This adds a bit of overhead to the process (but not that much)</li>
+<li>The first row of the screens remains unused. Only 256x191 pixels are used.</li>
+</ul>
+<p><strong>Conclusion:</strong></p>
+<p>This is the mode I'd recommend everyone to use for your applications. The CPU
+overhead is well worth the reliability under low framerates, the availability of
+the debug console and the low latency of the 3D output.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>7. Conclusion</h2>
+<p>Yes, this is complicated.</p>
+<p>I've tried to give as much flexibility to the developers as possible, and this
+is the result. It is certainly overwhelming for someone who has never done
+anything similar. I've also tried to keep compatibility with the old unreliable
+dual 3D system, just in case the new ones break some game created with old
+versions of Nitro Engine.</p>
+<p>My advice is to use the DMA method and forget about the others. The classic dual
+3D system is too unreliable, you can't expect to have a game that always draws
+exactly 60 FPS. The FB method has a pretty big latency when displaying the 3D
+output, so it is only useful for slow-paced games.</p>
+<p>I hope that this post has helped you understand how tricky this is, and how
+flexible the NDS video hardware is!</p>
+</div>
+
+            </div>
+            <!-- /.entry-content -->
+        </article>
+    </section>
+
+        </div>
+        <div class="col-sm-3" id="sidebar">
+            <aside>
+<!-- Sidebar -->
+<section class="well well-sm">
+  <ul class="list-group list-group-flush">
+
+<!-- Sidebar/Social -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Social</span></h4>
+  <ul class="list-group" id="social">
+    <li class="list-group-item"><a href="https://github.com/AntonioND"><i class="fa fa-github-square fa-lg"></i> github</a></li>
+    <li class="list-group-item"><a href="https://www.linkedin.com/in/antonio-ni%C3%B1o-d%C3%ADaz-1b150ab7/en"><i class="fa fa-linkedin-square fa-lg"></i> linkedin</a></li>
+  </ul>
+</li>
+<!-- End Sidebar/Social -->
+
+<!-- Sidebar/Categories -->
+<li class="list-group-item">
+  <h4><i class="fa fa-home fa-lg"></i><span class="icon-label">Categories</span></h4>
+  <ul class="list-group" id="categories">
+    <li class="list-group-item">
+      <a href="./category/blog.html"><i class="fa fa-folder-open fa-lg"></i>blog</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/electronics.html"><i class="fa fa-folder-open fa-lg"></i>electronics</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/emulation.html"><i class="fa fa-folder-open fa-lg"></i>emulation</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/gameboy.html"><i class="fa fa-folder-open fa-lg"></i>gameboy</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/hacking.html"><i class="fa fa-folder-open fa-lg"></i>hacking</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/hp50g.html"><i class="fa fa-folder-open fa-lg"></i>hp50g</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/nintendo-3ds.html"><i class="fa fa-folder-open fa-lg"></i>nintendo-3ds</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/nintendo-ds.html"><i class="fa fa-folder-open fa-lg"></i>nintendo-ds</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/programming.html"><i class="fa fa-folder-open fa-lg"></i>programming</a>
+    </li>
+    <li class="list-group-item">
+      <a href="./category/raspberry-pi.html"><i class="fa fa-folder-open fa-lg"></i>raspberry-pi</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Categories -->
+
+<!-- Sidebar/Links -->
+<li class="list-group-item">
+  <h4><i class="fa fa-external-link-square fa-lg"></i><span class="icon-label">Links</span></h4>
+  <ul class="list-group" id="links">
+    <li class="list-group-item">
+      <a href="http://www.skylyrac.net/old-site/index.html" target="_blank">My old website</a>
+    </li>
+    <li class="list-group-item">
+      <a href="https://gbadev.net" target="_blank">GBADev discord</a>
+    </li>
+  </ul>
+</li>
+<!-- End Sidebar/Links -->
+  </ul>
+</section>
+<!-- End Sidebar -->            </aside>
+        </div>
+    </div>
+</div>
+<!-- End Content Container -->
+
+<footer>
+   <div class="container">
+      <hr>
+      <div class="row">
+         <div class="col-xs-10">&copy; 2023 Antonio Niño Díaz
+            &middot; Powered by <a href="https://github.com/getpelican/pelican-themes/tree/master/pelican-bootstrap3" target="_blank">pelican-bootstrap3</a>,
+            <a href="http://docs.getpelican.com/" target="_blank">Pelican</a>,
+            <a href="http://getbootstrap.com" target="_blank">Bootstrap</a>              <p><small><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="http://www.skylyrac.net/images/cc-by-nc-sa-80x15.png" /></a> This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.</small></p>
+         </div>
+         <div class="col-xs-2"><p class="pull-right"><i class="fa fa-arrow-up"></i> <a href="#">Back to top</a></p></div>
+      </div>
+   </div>
+</footer>
+<script src="./theme/js/jquery.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="./theme/js/bootstrap.min.js"></script>
+
+<!-- Enable responsive features in IE8 with Respond.js (https://github.com/scottjehl/Respond) -->
+<script src="./theme/js/respond.min.js"></script>
+
+
+    <script src="./theme/js/bodypadding.js"></script>
+
+
+</body>
+</html>
