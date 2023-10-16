@@ -572,13 +572,17 @@ to use low indices and not have to worry about DISPCNT.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>0x06208000 - 0x06208200</td>
-<td>512 B</td>
-<td>Framebuffer (one line, 256 pixels)</td>
-</tr>
 <tr><td>0x06208000 - 0x06209000</td>
 <td>4 KB</td>
 <td>Tile base 2</td>
+</tr>
+<tr><td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>Free</td>
+</tr>
+<tr><td>0x0620B000 - 0x0620B200</td>
+<td>512 B</td>
+<td>Framebuffer (one line, 256 pixels)</td>
 </tr>
 <tr><td>&nbsp;</td>
 <td>&nbsp;</td>
@@ -598,10 +602,18 @@ to use low indices and not have to worry about DISPCNT.</p>
 each tileset slot is 16 KB, so there is only space for one tileset in VRAM I.
 Unfortunately, there is also only one slot for bitmaps in VRAM I, as they are
 organized in 16 KB slots. Both slots need to share the space.</p>
-<p>Luckily, 256 bytes for a 4 bpp tileset uses the same amount of memory as 8 tiles:
-256 / (8 * 8 * 4 / 8) = 8. The first characters of the console correspond to
-non-printable ASCII characters, so this overlap isn't a real issue as the first
-8 characters won't ever be shown anyway.</p>
+<p>Luckily, the tileset of the console doesn't use the whole 16 KB. The current
+console of libnds uses up to 256 characters, which requires (for a 4 bpp
+tileset) 8 KB of VRAM. This means that anything in the second half of the bank
+(VRAM I is 16 KB in size) can be used for maps or to store the pseudo
+framebuffer line.</p>
+<p>8 KB is the same size as 16 lines in a 16-bit background. We can setup our
+16-bit bitmap as if it started at the same base as the tileset, and we can store
+our line bitmap at some point between 16 and 32 lines.</p>
+<p>Now, remember that the map uses the last 2 KB of the VRAM bank, and that uses as
+much memory as 8 lines of a 16-bit bitmap. The free lines of the bitmap are
+actually 16 to 24.</p>
+<p>Nitro Engine uses line 20, located at offset 0x3000 from the start of the bank.</p>
 <p><strong>Advantages:</strong></p>
 <ul class="simple">
 <li>If the framerate ever drops below 60 FPS, the output of both screens will be

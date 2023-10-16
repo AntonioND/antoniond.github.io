@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SkyLyrac</title><link href="http://www.skylyrac.net/" rel="alternate"></link><link href="http://www.skylyrac.net/feeds/all.atom.xml" rel="self"></link><id>http://www.skylyrac.net/</id><updated>2023-10-12T22:47:00+01:00</updated><entry><title>Dual screen 3D on the NDS</title><link href="http://www.skylyrac.net/2023-10-12-dual-screen-3d-on-nds.html" rel="alternate"></link><published>2023-10-12T21:36:00+01:00</published><updated>2023-10-12T22:47:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2023-10-12:/2023-10-12-dual-screen-3d-on-nds.html</id><summary type="html">&lt;p&gt;The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SkyLyrac</title><link href="http://www.skylyrac.net/" rel="alternate"></link><link href="http://www.skylyrac.net/feeds/all.atom.xml" rel="self"></link><id>http://www.skylyrac.net/</id><updated>2023-10-16T02:35:00+01:00</updated><entry><title>Dual screen 3D on the NDS</title><link href="http://www.skylyrac.net/2023-10-12-dual-screen-3d-on-nds.html" rel="alternate"></link><published>2023-10-12T21:36:00+01:00</published><updated>2023-10-16T02:35:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2023-10-12:/2023-10-12-dual-screen-3d-on-nds.html</id><summary type="html">&lt;p&gt;The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of
 features. Normally it can only be used to display 3D graphics on one screen, but
 it is possible to display 3D on both screens by using a special video capture
 circuit.&lt;/p&gt;
@@ -456,13 +456,17 @@ to use low indices and not have to worry about DISPCNT.&lt;/p&gt;
 &lt;/tr&gt;
 &lt;/thead&gt;
 &lt;tbody valign="top"&gt;
-&lt;tr&gt;&lt;td&gt;0x06208000 - 0x06208200&lt;/td&gt;
-&lt;td&gt;512 B&lt;/td&gt;
-&lt;td&gt;Framebuffer (one line, 256 pixels)&lt;/td&gt;
-&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;0x06208000 - 0x06209000&lt;/td&gt;
 &lt;td&gt;4 KB&lt;/td&gt;
 &lt;td&gt;Tile base 2&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&lt;/td&gt;
+&lt;td&gt;Free&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;0x0620B000 - 0x0620B200&lt;/td&gt;
+&lt;td&gt;512 B&lt;/td&gt;
+&lt;td&gt;Framebuffer (one line, 256 pixels)&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;&amp;nbsp;&lt;/td&gt;
 &lt;td&gt;&amp;nbsp;&lt;/td&gt;
@@ -482,10 +486,18 @@ to use low indices and not have to worry about DISPCNT.&lt;/p&gt;
 each tileset slot is 16 KB, so there is only space for one tileset in VRAM I.
 Unfortunately, there is also only one slot for bitmaps in VRAM I, as they are
 organized in 16 KB slots. Both slots need to share the space.&lt;/p&gt;
-&lt;p&gt;Luckily, 256 bytes for a 4 bpp tileset uses the same amount of memory as 8 tiles:
-256 / (8 * 8 * 4 / 8) = 8. The first characters of the console correspond to
-non-printable ASCII characters, so this overlap isn't a real issue as the first
-8 characters won't ever be shown anyway.&lt;/p&gt;
+&lt;p&gt;Luckily, the tileset of the console doesn't use the whole 16 KB. The current
+console of libnds uses up to 256 characters, which requires (for a 4 bpp
+tileset) 8 KB of VRAM. This means that anything in the second half of the bank
+(VRAM I is 16 KB in size) can be used for maps or to store the pseudo
+framebuffer line.&lt;/p&gt;
+&lt;p&gt;8 KB is the same size as 16 lines in a 16-bit background. We can setup our
+16-bit bitmap as if it started at the same base as the tileset, and we can store
+our line bitmap at some point between 16 and 32 lines.&lt;/p&gt;
+&lt;p&gt;Now, remember that the map uses the last 2 KB of the VRAM bank, and that uses as
+much memory as 8 lines of a 16-bit bitmap. The free lines of the bitmap are
+actually 16 to 24.&lt;/p&gt;
+&lt;p&gt;Nitro Engine uses line 20, located at offset 0x3000 from the start of the bank.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Advantages:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;If the framerate ever drops below 60 FPS, the output of both screens will be
