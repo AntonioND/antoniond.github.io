@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns# fb: https://www.facebook.com/2008/fbml">
 <head>
-    <title>Switch GBA into GBC mode by software - SkyLyrac</title>
+    <title>BlocksDS SDK Version 1.1.0 - SkyLyrac</title>
     <!-- Using the latest rendering mode for IE -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta charset="utf-8">
@@ -9,23 +9,22 @@
 
 
 
-<link rel="canonical" href="./2014-04-20-switch-gba-into-gbc-mode-by-software.html">
+<link rel="canonical" href="./2024-05-15-blocksds-sdk-version-1-1-0.html">
 
         <meta name="author" content="Antonio Niño Díaz" />
-        <meta name="keywords" content="gameboy,gameboy-advance,c,hacking" />
-        <meta name="description" content="Hello! I know dwedit did something like this a few years ago, but I never managed to compile its code and make it run (even though the precompiled binary worked fine). Anyway, the code was just an incomprehensible mess: http://www.dwedit.org/dwedit_board/viewtopic.php?id=339 This morning …" />
+        <meta name="keywords" content="programming,nintendo-ds,blocksds" />
+        <meta name="description" content="It&#39;s been over a year since the first release of BlocksDS, and over half year since this blog post, which was written after version 0.8.1 was released. The current version is 1.1.0, which means it&#39;s time to write a new post with the current state of …" />
 
         <meta property="og:site_name" content="SkyLyrac" />
         <meta property="og:type" content="article"/>
-        <meta property="og:title" content="Switch GBA into GBC mode by software"/>
-        <meta property="og:url" content="./2014-04-20-switch-gba-into-gbc-mode-by-software.html"/>
-        <meta property="og:description" content="Hello! I know dwedit did something like this a few years ago, but I never managed to compile its code and make it run (even though the precompiled binary worked fine). Anyway, the code was just an incomprehensible mess: http://www.dwedit.org/dwedit_board/viewtopic.php?id=339 This morning …"/>
-        <meta property="article:published_time" content="2014-04-20" />
-            <meta property="article:section" content="hacking" />
-            <meta property="article:tag" content="gameboy" />
-            <meta property="article:tag" content="gameboy-advance" />
-            <meta property="article:tag" content="c" />
-            <meta property="article:tag" content="hacking" />
+        <meta property="og:title" content="BlocksDS SDK Version 1.1.0"/>
+        <meta property="og:url" content="./2024-05-15-blocksds-sdk-version-1-1-0.html"/>
+        <meta property="og:description" content="It&#39;s been over a year since the first release of BlocksDS, and over half year since this blog post, which was written after version 0.8.1 was released. The current version is 1.1.0, which means it&#39;s time to write a new post with the current state of …"/>
+        <meta property="article:published_time" content="2024-05-15" />
+            <meta property="article:section" content="nintendo-ds" />
+            <meta property="article:tag" content="programming" />
+            <meta property="article:tag" content="nintendo-ds" />
+            <meta property="article:tag" content="blocksds" />
             <meta property="article:author" content="Antonio Niño Díaz" />
 
 
@@ -84,17 +83,17 @@ SkyLyrac            </a>
         <div class="col-sm-9">
             <ol class="breadcrumb">
                 <li><a href="." title="SkyLyrac"><i class="fa fa-home fa-lg"></i></a></li>
-                <li><a href="./category/hacking.html" title="hacking">hacking</a></li>
-                <li class="active">Switch GBA into GBC mode by software</li>
+                <li><a href="./category/nintendo-ds.html" title="nintendo-ds">nintendo-ds</a></li>
+                <li class="active">BlocksDS SDK Version 1.1.0</li>
             </ol>
     <section id="content">
         <article>
             <header class="page-header">
                 <h1>
-                    <a href="./2014-04-20-switch-gba-into-gbc-mode-by-software.html"
+                    <a href="./2024-05-15-blocksds-sdk-version-1-1-0.html"
                        rel="bookmark"
-                       title="Permalink to Switch GBA into GBC mode by software">
-                        Switch GBA into GBC mode by software
+                       title="Permalink to BlocksDS SDK Version 1.1.0">
+                        BlocksDS SDK Version 1.1.0
                     </a>
                 </h1>
             </header>
@@ -104,7 +103,7 @@ SkyLyrac            </a>
 <footer class="post-info">
     <span class="label label-default">Date</span>
     <span class="published">
-        <i class="fa fa-calendar"></i><time datetime="2014-04-20T20:46:00+01:00"> Sun 20 April 2014</time>
+        <i class="fa fa-calendar"></i><time datetime="2024-05-15T02:19:00+01:00"> Wed 15 May 2024</time>
     </span>
 
 
@@ -112,36 +111,69 @@ SkyLyrac            </a>
 
 
 <span class="label label-default">Tags</span>
-	<a href="./tag/gameboy.html">gameboy</a>
+	<a href="./tag/programming.html">programming</a>
         /
-	<a href="./tag/gameboy-advance.html">gameboy-advance</a>
+	<a href="./tag/nintendo-ds.html">nintendo-ds</a>
         /
-	<a href="./tag/c.html">c</a>
-        /
-	<a href="./tag/hacking.html">hacking</a>
+	<a href="./tag/blocksds.html">blocksds</a>
     
 </footer><!-- /.post-info -->                    </div>
                 </div>
-                <p>Hello!</p>
-<p>I know dwedit did something like this a few years ago, but I never managed to
-compile its code and make it run (even though the precompiled binary worked
-fine). Anyway, the code was just an incomprehensible mess:</p>
-<p><a class="reference external" href="http://www.dwedit.org/dwedit_board/viewtopic.php?id=339">http://www.dwedit.org/dwedit_board/viewtopic.php?id=339</a></p>
-<p>This morning I've read that the GBA bios still had the piece of code that
-switches the GBA into GBC mode, like Nintendo planned to do in the beginning
-(before deciding that it would be better to do it with a hardware switch).</p>
-<p>I've disassembled the part that performs this switch and made a little demo to
-show that it works! Here it is:</p>
-<p><a class="reference external" href="https://github.com/AntonioND/gba-switch-to-gbc">https://github.com/AntonioND/gba-switch-to-gbc</a></p>
-<p>But it doesn't end here! It can also apply an affine transformation to the GBC
-video output, and even enable mosaic effect or <tt class="docutils literal">GREENSWP</tt> register! The
-<tt class="docutils literal">GREENSWP</tt> register works a bit different than in GBA mode, by the way.</p>
-<p>The bad thing is that the video output only works in GB Micro, in GBA and GBA SP
-it shows a black screen, and in DS it doesn't work at all (it doesn't have a GB
-CPU).</p>
-<p>I've also uploaded a video:</p>
-<p><a class="reference external" href="https://www.youtube.com/watch?v=-SkR8SAdS9w">https://www.youtube.com/watch?v=-SkR8SAdS9w</a></p>
-<p>Bye!</p>
+                <p>It's been over a year since the first release of <a class="reference external" href="https://github.com/blocksds/sdk">BlocksDS</a>, and over half year
+since <a class="reference external" href="./2023-08-18-blocksds-sdk.html">this blog post</a>, which was
+written after version 0.8.1 was released. The current version is 1.1.0, which
+means it's time to write a new post with the current state of BlocksDS!</p>
+<p>First of all, check this up-to-date <a class="reference external" href="https://blocksds.github.io/docs/introduction/introduction/">introduction</a> if you have never heard of
+BlocksDS. Feel free to skip it if you are already familiar with it! In short, it
+is an actively maintained SDK to develop applications for the DS in C or C++.</p>
+<p>There are too many changes between versions 1.1.0 and 0.8.1 to list them here.
+You can check the <a class="reference external" href="https://blocksds.github.io/docs/introduction/changelog/">changelog</a> for more details, but this is a list of the most
+important changes:</p>
+<ul class="simple">
+<li>NitroFS has been fully reimplemented by <a class="reference external" href="https://asie.pl/">asie</a>, which increased filesystem
+performance by orders of magnitude. The previous system (NitroFAT) was a
+workaround implemented by me which required two levels of FAT filesystem
+access, and that was very slow.</li>
+<li>There is experimental and preliminary support for the Teak DSP of the DSi. It
+isn't ready to be used by most people, but it's in a good enough state that
+developers can use the current toolchain and libraries to make incremental
+improvements.</li>
+<li>A new API has been added to use Slot-2 peripherals like RAM expansion packs,
+rumble, gyroscopes and tilt sensors.</li>
+<li>The default Makefiles have been simplified and they now use compiler-provided
+<tt class="docutils literal">.specs</tt> files (which will make it easier to keep up-to-date with potential
+compiler and linker flags changes).</li>
+<li>A race condition between <tt class="docutils literal">scanKeys()</tt> and <tt class="docutils literal">touchRead()</tt> has been fixed.</li>
+<li>The RTC interrupt is no longer used to update the RTC time. Most emulators
+didn't support it, and it wasn't supported by the 3DS in DS/DSi mode.</li>
+<li>The documentation of BlocksDS and all its libraries has been dramatically
+improved and it is now available online: <a class="reference external" href="https://blocksds.github.io/docs/">https://blocksds.github.io/docs/</a></li>
+<li>Lots and lots of examples have been added.</li>
+</ul>
+<p>Some minor changes that are also significant:</p>
+<ul class="simple">
+<li>There are new helper functions to set and get the current RTC time in a
+convenient way. The old setter function didn't work.</li>
+<li><tt class="docutils literal">glTexImage2D()</tt> now accepts sizes in pixels as well as <tt class="docutils literal">GL_TEX_SIZE_ENUM</tt>
+values. This is something that has always bothered me, the requirement to use
+the enumeration values always made using this function very awkward.</li>
+<li>There have been some improvements to <tt class="docutils literal">grit</tt> to improve the <tt class="docutils literal">grf</tt> format.
+<tt class="docutils literal">libnds</tt> now has functions to read graphics from <tt class="docutils literal">grf</tt> files, and they are
+used in some examples.</li>
+<li><tt class="docutils literal">dlditool</tt> has been replaced by <tt class="docutils literal">dldipatch</tt>, which is less buggy.</li>
+<li>Some libc locking functions (<tt class="docutils literal"><span class="pre">_retarget_lock_*()</span></tt>) have been implemented
+to allow libc functions to work in a multithreaded environment.</li>
+<li>The following libc functions have been implemented: <tt class="docutils literal">realpath()</tt>,
+<tt class="docutils literal">utime()</tt>, <tt class="docutils literal">utimes()</tt>, <tt class="docutils literal">scandir()</tt>, <tt class="docutils literal">alphasort()</tt>, <tt class="docutils literal">versionsort()</tt>.</li>
+<li>Added <tt class="docutils literal">nitroFSOpenById()</tt> and <tt class="docutils literal">nitroFSFopenById()</tt> functions, allowing
+opening files directly without paying the cost of a directory lookup.
+Accordingly, NitroFS file systems which contain a FAT table but no FNT table
+can now be opened.</li>
+<li>There is now a function to get the name of the default drive (<tt class="docutils literal">sd:</tt> for DSi,
+<tt class="docutils literal">fat:</tt> for DS).</li>
+<li>The value of the RAM size field in <tt class="docutils literal">REG_SCFG_EXT</tt> in the ARM9 is now set
+to 16 MB or 32 MB instead of being fixed to 32 MB even in retail DSi units.</li>
+</ul>
 
             </div>
             <!-- /.entry-content -->

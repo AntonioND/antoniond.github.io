@@ -1,5 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>SkyLyrac</title><link href="http://www.skylyrac.net/" rel="alternate"></link><link href="http://www.skylyrac.net/feeds/all.atom.xml" rel="self"></link><id>http://www.skylyrac.net/</id><updated>2023-10-16T02:35:00+01:00</updated><entry><title>Dual screen 3D on the NDS</title><link href="http://www.skylyrac.net/2023-10-12-dual-screen-3d-on-nds.html" rel="alternate"></link><published>2023-10-12T21:36:00+01:00</published><updated>2023-10-16T02:35:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2023-10-12:/2023-10-12-dual-screen-3d-on-nds.html</id><summary type="html">&lt;p&gt;The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of
+<feed xmlns="http://www.w3.org/2005/Atom"><title>SkyLyrac</title><link href="http://www.skylyrac.net/" rel="alternate"></link><link href="http://www.skylyrac.net/feeds/all.atom.xml" rel="self"></link><id>http://www.skylyrac.net/</id><updated>2024-05-15T02:19:00+01:00</updated><entry><title>BlocksDS SDK Version 1.1.0</title><link href="http://www.skylyrac.net/2024-05-15-blocksds-sdk-version-1-1-0.html" rel="alternate"></link><published>2024-05-15T02:19:00+01:00</published><updated>2024-05-15T02:19:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2024-05-15:/2024-05-15-blocksds-sdk-version-1-1-0.html</id><summary type="html">&lt;p&gt;It's been over a year since the first release of &lt;a class="reference external" href="https://github.com/blocksds/sdk"&gt;BlocksDS&lt;/a&gt;, and over half year
+since &lt;a class="reference external" href="http://www.skylyrac.net/2023-08-18-blocksds-sdk.html"&gt;this blog post&lt;/a&gt;, which was
+written after version 0.8.1 was released. The current version is 1.1.0, which
+means it's time to write a new post with the current state of …&lt;/p&gt;</summary><content type="html">&lt;p&gt;It's been over a year since the first release of &lt;a class="reference external" href="https://github.com/blocksds/sdk"&gt;BlocksDS&lt;/a&gt;, and over half year
+since &lt;a class="reference external" href="http://www.skylyrac.net/2023-08-18-blocksds-sdk.html"&gt;this blog post&lt;/a&gt;, which was
+written after version 0.8.1 was released. The current version is 1.1.0, which
+means it's time to write a new post with the current state of BlocksDS!&lt;/p&gt;
+&lt;p&gt;First of all, check this up-to-date &lt;a class="reference external" href="https://blocksds.github.io/docs/introduction/introduction/"&gt;introduction&lt;/a&gt; if you have never heard of
+BlocksDS. Feel free to skip it if you are already familiar with it! In short, it
+is an actively maintained SDK to develop applications for the DS in C or C++.&lt;/p&gt;
+&lt;p&gt;There are too many changes between versions 1.1.0 and 0.8.1 to list them here.
+You can check the &lt;a class="reference external" href="https://blocksds.github.io/docs/introduction/changelog/"&gt;changelog&lt;/a&gt; for more details, but this is a list of the most
+important changes:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;NitroFS has been fully reimplemented by &lt;a class="reference external" href="https://asie.pl/"&gt;asie&lt;/a&gt;, which increased filesystem
+performance by orders of magnitude. The previous system (NitroFAT) was a
+workaround implemented by me which required two levels of FAT filesystem
+access, and that was very slow.&lt;/li&gt;
+&lt;li&gt;There is experimental and preliminary support for the Teak DSP of the DSi. It
+isn't ready to be used by most people, but it's in a good enough state that
+developers can use the current toolchain and libraries to make incremental
+improvements.&lt;/li&gt;
+&lt;li&gt;A new API has been added to use Slot-2 peripherals like RAM expansion packs,
+rumble, gyroscopes and tilt sensors.&lt;/li&gt;
+&lt;li&gt;The default Makefiles have been simplified and they now use compiler-provided
+&lt;tt class="docutils literal"&gt;.specs&lt;/tt&gt; files (which will make it easier to keep up-to-date with potential
+compiler and linker flags changes).&lt;/li&gt;
+&lt;li&gt;A race condition between &lt;tt class="docutils literal"&gt;scanKeys()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;touchRead()&lt;/tt&gt; has been fixed.&lt;/li&gt;
+&lt;li&gt;The RTC interrupt is no longer used to update the RTC time. Most emulators
+didn't support it, and it wasn't supported by the 3DS in DS/DSi mode.&lt;/li&gt;
+&lt;li&gt;The documentation of BlocksDS and all its libraries has been dramatically
+improved and it is now available online: &lt;a class="reference external" href="https://blocksds.github.io/docs/"&gt;https://blocksds.github.io/docs/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Lots and lots of examples have been added.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Some minor changes that are also significant:&lt;/p&gt;
+&lt;ul class="simple"&gt;
+&lt;li&gt;There are new helper functions to set and get the current RTC time in a
+convenient way. The old setter function didn't work.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;glTexImage2D()&lt;/tt&gt; now accepts sizes in pixels as well as &lt;tt class="docutils literal"&gt;GL_TEX_SIZE_ENUM&lt;/tt&gt;
+values. This is something that has always bothered me, the requirement to use
+the enumeration values always made using this function very awkward.&lt;/li&gt;
+&lt;li&gt;There have been some improvements to &lt;tt class="docutils literal"&gt;grit&lt;/tt&gt; to improve the &lt;tt class="docutils literal"&gt;grf&lt;/tt&gt; format.
+&lt;tt class="docutils literal"&gt;libnds&lt;/tt&gt; now has functions to read graphics from &lt;tt class="docutils literal"&gt;grf&lt;/tt&gt; files, and they are
+used in some examples.&lt;/li&gt;
+&lt;li&gt;&lt;tt class="docutils literal"&gt;dlditool&lt;/tt&gt; has been replaced by &lt;tt class="docutils literal"&gt;dldipatch&lt;/tt&gt;, which is less buggy.&lt;/li&gt;
+&lt;li&gt;Some libc locking functions (&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;_retarget_lock_*()&lt;/span&gt;&lt;/tt&gt;) have been implemented
+to allow libc functions to work in a multithreaded environment.&lt;/li&gt;
+&lt;li&gt;The following libc functions have been implemented: &lt;tt class="docutils literal"&gt;realpath()&lt;/tt&gt;,
+&lt;tt class="docutils literal"&gt;utime()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;utimes()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;scandir()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;alphasort()&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;versionsort()&lt;/tt&gt;.&lt;/li&gt;
+&lt;li&gt;Added &lt;tt class="docutils literal"&gt;nitroFSOpenById()&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;nitroFSFopenById()&lt;/tt&gt; functions, allowing
+opening files directly without paying the cost of a directory lookup.
+Accordingly, NitroFS file systems which contain a FAT table but no FNT table
+can now be opened.&lt;/li&gt;
+&lt;li&gt;There is now a function to get the name of the default drive (&lt;tt class="docutils literal"&gt;sd:&lt;/tt&gt; for DSi,
+&lt;tt class="docutils literal"&gt;fat:&lt;/tt&gt; for DS).&lt;/li&gt;
+&lt;li&gt;The value of the RAM size field in &lt;tt class="docutils literal"&gt;REG_SCFG_EXT&lt;/tt&gt; in the ARM9 is now set
+to 16 MB or 32 MB instead of being fixed to 32 MB even in retail DSi units.&lt;/li&gt;
+&lt;/ul&gt;
+</content><category term="nintendo-ds"></category><category term="programming"></category><category term="nintendo-ds"></category><category term="blocksds"></category></entry><entry><title>Dual screen 3D on the NDS</title><link href="http://www.skylyrac.net/2023-10-12-dual-screen-3d-on-nds.html" rel="alternate"></link><published>2023-10-12T21:36:00+01:00</published><updated>2023-10-16T02:35:00+01:00</updated><author><name>Antonio Niño Díaz</name></author><id>tag:www.skylyrac.net,2023-10-12:/2023-10-12-dual-screen-3d-on-nds.html</id><summary type="html">&lt;p&gt;The Nintendo DS has a GPU with a 3D engine that supports a surprising amount of
 features. Normally it can only be used to display 3D graphics on one screen, but
 it is possible to display 3D on both screens by using a special video capture
 circuit.&lt;/p&gt;
