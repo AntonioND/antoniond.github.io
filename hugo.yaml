@@ -1,0 +1,149 @@
+baseURL: "http://localhost"
+languageCode: "en-us"
+theme: "hugo-theme-stack"
+title: "SkyLyrac"
+copyright: "Antonio Niño Díaz"
+
+# Theme i18n support
+# Available values: ar, bn, ca, de, el, en, es, fr, hu, id, it, ja, ko, nl, pt-br, th, uk, zh-cn, zh-hk, zh-tw
+DefaultContentLanguage: en
+
+# Set hasCJKLanguage to true if DefaultContentLanguage is in [zh-cn ja ko]
+# This will make .Summary and .WordCount behave correctly for CJK languages.
+hasCJKLanguage: false
+
+pagination:
+    pagerSize: 10
+
+permalinks:
+    post: /p/:slug/
+    page: /:slug/
+
+params:
+    mainSections:
+        - post
+    featuredImageField: "image"
+    rssFullContent: true
+    favicon: # e.g.: favicon placed in `static/favicon.ico` of your site folder, then set this field to `/favicon.ico` (`/` is necessary)
+
+    footer:
+        since: 2009
+        customText: Content licensed under CC BY-NC-SA 4.0. Copyright © 2009-2026 Antonio Niño Díaz
+
+    dateFormat:
+        published: 02 Jan, 2006
+        lastUpdated: 02 Jan, 2006 15:04 MST
+
+    sidebar:
+        #emoji: 🌃
+        subtitle: My projects and thoughts
+        avatar:
+            enabled: true
+            local: true
+            src: "img/avatar.jpg"
+
+    article:
+        math: false
+        toc: true
+        readingTime: false
+        license:
+            enabled: false
+            default:
+
+    widgets:
+        homepage:
+            #- type: search
+            - type: tag-cloud
+              params:
+                  limit: 10
+        page:
+            - type: toc
+
+    defaultImage:
+        opengraph:
+            enabled: false
+            local: false
+            src:
+
+    colorScheme:
+        # Don't Display toggle
+        toggle: false
+        # Available values: auto, light, dark
+        default: light
+
+    imageProcessing:
+        cover:
+            enabled: true
+        content:
+            enabled: true
+
+### Custom menu
+### See https://stack.jimmycai.com/config/menu
+menu:
+    main:
+        - identifier: home
+          name: Home
+          url: "/"
+          weight: 1
+        - identifier: downloads
+          name: Downloads
+          url: "/downloads"
+          weight: 2
+        - identifier: about
+          name: About me
+          url: "/about-me"
+          weight: 3
+        - identifier: old-site
+          name: My old website
+          url: "/old-site"
+          weight: 4
+
+    social:
+        - identifier: codeberg
+          name: Codeberg
+          url: "https://codeberg.org/SkyLyrac"
+          params:
+              icon: codeberg
+        - identifier: discord
+          name: gbadev discord
+          url: "https://gbadev.net"
+          params:
+              icon: discord
+
+related:
+    includeNewer: true
+    threshold: 60
+    toLower: false
+    indices:
+        - name: tags
+          weight: 100
+
+markup:
+    goldmark:
+        extensions:
+            passthrough:
+                enable: true
+                delimiters:
+                    block:
+                        - - \[
+                          - \]
+                        - - $$
+                          - $$
+                    inline:
+                        - - \(
+                          - \)
+        renderer:
+            ## Set to true if you have HTML content inside Markdown
+            unsafe: true
+    tableOfContents:
+        endLevel: 4
+        ordered: true
+        startLevel: 2
+    highlight:
+        noClasses: false
+        codeFences: true
+        guessSyntax: false
+        lineNoStart: 1
+        lineNos: true
+        lineNumbersInTable: true
+        tabWidth: 4

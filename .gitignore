@@ -1,0 +1,4 @@
+.hugo_build.lock
+themes/hugo-theme-stack/
+resources/_gen/
+public/
