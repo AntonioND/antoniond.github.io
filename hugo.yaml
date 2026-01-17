@@ -109,6 +109,11 @@ menu:
           url: "https://gbadev.net"
           params:
               icon: discord
+        - identifier: github
+          name: GitHub
+          url: "https://github/AntonioND"
+          params:
+              icon: github
 
 related:
     includeNewer: true
