@@ -12,6 +12,9 @@ DefaultContentLanguage: en
 # This will make .Summary and .WordCount behave correctly for CJK languages.
 hasCJKLanguage: false
 
+# Required if you want to render robots.txt template
+enableRobotsTXT: true
+
 pagination:
     pagerSize: 10
 
