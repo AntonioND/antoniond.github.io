@@ -1,5 +1,6 @@
 ---
 title: "Port of Trusted Firmware-A to the Raspberry Pi 3"
+slug: "2018-02-01-port-arm-tf-to-rpi3"
 publishDate: "2018-02-01T23:54:00"
 Lastmod: "2026-01-14T01:18:00"
 authors:

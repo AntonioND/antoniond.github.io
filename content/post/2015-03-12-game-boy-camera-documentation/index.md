@@ -1,5 +1,6 @@
 ---
 title: "Game Boy Camera documentation"
+slug: "2015-03-12-game-boy-camera-documentation"
 publishDate: "2015-03-12T13:20:00"
 Lastmod: "2026-01-14T01:22:00"
 authors:

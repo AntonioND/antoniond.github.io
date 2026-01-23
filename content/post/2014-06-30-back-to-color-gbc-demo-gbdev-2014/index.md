@@ -1,5 +1,6 @@
 ---
 title: "Back to Color [GBC Demo][GBDev 2014]"
+slug: "2014-06-30-back-to-color-gbc-demo-gbdev-2014"
 publishDate: "2014-06-30T00:01:00"
 Lastmod: "2026-01-14T01:27:00"
 authors:

@@ -1,5 +1,6 @@
 ---
 title: "Raspberry Pi LED ambient lamp"
+slug: "2020-06-27-rpi-led-ambient-lamp"
 publishDate: "2020-06-27T13:27:00"
 Lastmod: "2026-01-14T01:19:00"
 authors:

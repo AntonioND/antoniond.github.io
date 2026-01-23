@@ -1,5 +1,6 @@
 ---
 title: "GB Camera emulated with a webcam!"
+slug: "2010-02-02-gb-camera-emulated-webcam"
 publishDate: "2010-02-02T15:29:00"
 Lastmod: "2018-02-01T23:18:00"
 authors:

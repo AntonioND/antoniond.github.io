@@ -1,5 +1,6 @@
 ---
 title: "Welcome to my new blog!"
+slug: "2018-01-29-welcome"
 publishDate: "2018-01-29T01:54:00"
 Lastmod: "2018-02-03T21:09:00"
 authors:

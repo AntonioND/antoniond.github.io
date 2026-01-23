@@ -1,5 +1,6 @@
 ---
 title: "Geometrix [GBC Game][GBDev 2015]"
+slug: "2015-12-04-geometrix-gbc-game-gbdev-2015"
 publishDate: "2015-12-04T16:32:00"
 Lastmod: "2026-01-14T01:24:00"
 authors:

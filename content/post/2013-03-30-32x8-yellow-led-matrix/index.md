@@ -1,5 +1,6 @@
 ---
 title: "32x8 Yellow LED Matrix"
+slug: "2013-03-30-32x8-yellow-led-matrix"
 publishDate: "2013-03-30T00:53:00"
 Lastmod: "2018-02-01T23:10:00"
 authors:

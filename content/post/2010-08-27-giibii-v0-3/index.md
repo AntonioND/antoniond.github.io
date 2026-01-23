@@ -1,5 +1,6 @@
 ---
 title: "GiiBii v0.3"
+slug: "2010-08-27-giibii-v0-3"
 publishDate: "2010-08-27T16:55:00"
 Lastmod: "2018-02-01T23:01:00"
 authors:

@@ -1,5 +1,6 @@
 ---
 title: "Nitro Engine v0.6.1"
+slug: "2011-09-01-nitro-engine-v0-6-1"
 publishDate: "2011-09-01T16:02:00"
 Lastmod: "2018-02-01T23:05:00"
 authors:

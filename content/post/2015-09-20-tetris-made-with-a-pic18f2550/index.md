@@ -1,5 +1,6 @@
 ---
 title: "Tetris made with a PIC18F2550"
+slug: "2015-09-20-tetris-made-with-a-pic18f2550"
 publishDate: "2015-09-20T23:06:00"
 authors:
 - name: "Antonio Niño Díaz"

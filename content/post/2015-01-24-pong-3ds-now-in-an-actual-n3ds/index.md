@@ -1,5 +1,6 @@
 ---
 title: "Pong 3DS, now in an actual Nintendo 3DS!"
+slug: "2015-01-24-pong-3ds-now-in-an-actual-n3ds"
 publishDate: "2015-01-24T17:16:00"
 Lastmod: "2026-01-14T01:24:00"
 authors:

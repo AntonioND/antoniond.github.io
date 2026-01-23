@@ -1,5 +1,6 @@
 ---
 title: "BlocksDS SDK"
+slug: "2023-08-18-blocksds-sdk"
 publishDate: "2023-08-18T17:44:00"
 Lastmod: "2026-01-14T01:43:00"
 authors:

@@ -1,5 +1,6 @@
 ---
 title: "RGBDS - Rednex Game Boy Development System"
+slug: "2018-02-05-rgbds"
 publishDate: "2018-02-05T23:42:00"
 Lastmod: "2026-01-14T01:30:00"
 authors:

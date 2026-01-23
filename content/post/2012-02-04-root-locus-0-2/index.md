@@ -1,5 +1,6 @@
 ---
 title: "Root Locus 0.2"
+slug: "2012-02-04-root-locus-0-2"
 publishDate: "2012-02-04T14:28:00"
 Lastmod: "2018-02-04T00:15:00"
 authors:

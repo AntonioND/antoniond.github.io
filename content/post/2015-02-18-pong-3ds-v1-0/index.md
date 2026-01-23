@@ -1,5 +1,6 @@
 ---
 title: "Pong 3DS v1.0"
+slug: "2015-02-18-pong-3ds-v1-0"
 publishDate: "2015-02-18T00:21:00"
 Lastmod: "2026-01-14T01:23:00"
 authors:

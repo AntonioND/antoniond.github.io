@@ -1,5 +1,6 @@
 ---
 title: "µCity v1.2"
+slug: "2018-01-31-ucity-v1-2"
 publishDate: "2018-01-31T02:10:00"
 Lastmod: "2026-01-14T01:29:00"
 authors:

@@ -1,5 +1,6 @@
 ---
 title: "GiiBii... now on PC!"
+slug: "2009-09-19-giibii-now-on-pc"
 publishDate: "2009-09-19T10:42:00"
 Lastmod: "2018-02-01T22:45:00"
 authors:

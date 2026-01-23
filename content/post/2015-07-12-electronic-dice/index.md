@@ -1,5 +1,6 @@
 ---
 title: "Electronic dice"
+slug: "2015-07-12-electronic-dice"
 publishDate: "2015-07-12T20:15:00"
 Lastmod: "2018-02-01T23:25:00"
 authors:

@@ -1,5 +1,6 @@
 ---
 title: "Welcome!"
+slug: "2009-09-19-welcome"
 publishDate: "2009-09-19T01:15:00"
 Lastmod: "2018-02-01T23:06:00"
 authors:

@@ -1,5 +1,6 @@
 ---
 title: "Pascal Pong v0.1"
+slug: "2009-10-24-pascal-pong-v0-1"
 publishDate: "2009-10-24T01:31:00"
 Lastmod: "2018-02-01T22:47:00"
 authors:

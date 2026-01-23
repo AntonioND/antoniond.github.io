@@ -1,5 +1,6 @@
 ---
 title: "Switch GBA into GBC mode by software"
+slug: "2014-04-20-switch-gba-into-gbc-mode-by-software"
 publishDate: "2014-04-20T20:46:00"
 Lastmod: "2026-01-14T01:16:00"
 authors:

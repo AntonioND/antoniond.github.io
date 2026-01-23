@@ -1,5 +1,6 @@
 ---
 title: "BlocksDS SDK Version 1.1.0"
+slug: "2024-05-15-blocksds-sdk-version-1-1-0"
 publishDate: "2024-05-15T02:19:00"
 Lastmod: "2026-01-14T01:20:00"
 authors:

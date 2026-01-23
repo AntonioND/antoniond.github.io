@@ -1,5 +1,6 @@
 ---
 title: "GiiBiiAdvance v0.1.0"
+slug: "2011-08-26-giibiiadvance-v0-1-0"
 publishDate: "2011-08-26T17:14:00"
 Lastmod: "2018-02-01T23:04:00"
 authors:

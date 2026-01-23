@@ -1,5 +1,6 @@
 ---
 title: "GiiBiiAdvance - WIP"
+slug: "2010-08-25-giibiiadvance-wip"
 publishDate: "2010-08-25T13:06:00"
 Lastmod: "2018-02-01T22:59:00"
 authors:

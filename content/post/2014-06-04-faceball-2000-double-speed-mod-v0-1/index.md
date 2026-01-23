@@ -1,5 +1,6 @@
 ---
 title: "Faceball 2000 Double Speed Mod v0.1"
+slug: "2014-06-04-faceball-2000-double-speed-mod-v0-1"
 publishDate: "2014-06-04T16:29:00"
 authors:
 - name: "Antonio Niño Díaz"

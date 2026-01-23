@@ -1,5 +1,6 @@
 ---
 title: "Dual screen 3D on the NDS"
+slug: "2023-10-12-dual-screen-3d-on-nds"
 publishDate: "2023-10-12T21:36:00"
 Lastmod: "2026-01-14T01:47:00"
 authors:

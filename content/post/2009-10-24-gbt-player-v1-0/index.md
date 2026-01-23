@@ -1,5 +1,6 @@
 ---
 title: "GBT Player v1.1"
+slug: "2009-10-24-gbt-player-v1-0"
 publishDate: "2009-10-24T16:06:00"
 Lastmod: "2018-02-01T22:49:00"
 authors:

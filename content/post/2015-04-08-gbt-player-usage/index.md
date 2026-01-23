@@ -1,5 +1,6 @@
 ---
 title: "GBT Player usage"
+slug: "2015-04-08-gbt-player-usage"
 publishDate: "2015-04-08T01:36:00"
 Lastmod: "2026-01-14T01:28:00"
 authors:
