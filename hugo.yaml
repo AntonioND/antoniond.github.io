@@ -31,7 +31,8 @@ params:
 
     footer:
         since: 2009
-        customText: Content licensed under CC BY-NC-SA 4.0. Copyright © 2009-2026 Antonio Niño Díaz
+        customText: Content licensed under CC BY-NC-SA 4.0.
+        # Copyright © 2009-2026 Antonio Niño Díaz
 
     dateFormat:
         published: 02 Jan, 2006
