@@ -115,7 +115,7 @@ menu:
               icon: discord
         - identifier: github
           name: GitHub
-          url: "https://github/AntonioND"
+          url: "https://github.com/AntonioND"
           params:
               icon: github
 
